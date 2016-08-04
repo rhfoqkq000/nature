@@ -65,7 +65,7 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
 
     /**
      * The {@link ViewPager} that will host the section contents.
-     */정
+     */
     private ViewPager mViewPager;
 
     @Override
