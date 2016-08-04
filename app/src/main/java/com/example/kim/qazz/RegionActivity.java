@@ -35,6 +35,7 @@ import java.util.ArrayList;
 public class RegionActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    //new없엉....
     GridLayout bottom;
     BottomSheetBehavior behavior;
     private ListView mlist;
@@ -109,7 +110,7 @@ public class RegionActivity extends AppCompatActivity
                     gPHP = new GettingPHP();
                     count--;
                 }
-                url = "http://return/town/";
+                url = "http://returntocs.xyz/town/";
                 text = spinnerdo.getSelectedItem().toString();
                 Log.i("text 2", text);
                 gPHP.execute(url + text);
