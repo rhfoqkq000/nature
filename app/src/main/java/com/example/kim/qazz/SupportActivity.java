@@ -52,7 +52,7 @@ import java.util.Locale;
 import java.util.Set;
 
 public class SupportActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ActionBar.TabListener{
-
+//Tab설
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -65,7 +65,7 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
 
     /**
      * The {@link ViewPager} that will host the section contents.
-     */
+     */정
     private ViewPager mViewPager;
 
     @Override
