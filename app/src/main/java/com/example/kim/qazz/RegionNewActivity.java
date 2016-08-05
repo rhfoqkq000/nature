@@ -14,7 +14,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
- * Created by Ryu on 2016-08-05.
+ * Created by Ryu on 2016-08-05.ff
  */
 public class RegionNewActivity extends AppCompatActivity implements OnMapReadyCallback {
     static final LatLng SEOUL = new LatLng(35.1997796, 128.60543);
