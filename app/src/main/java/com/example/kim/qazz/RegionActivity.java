@@ -31,7 +31,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import java.util.ArrayList;
-
+//dds
 public class RegionActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -203,6 +203,9 @@ public class RegionActivity extends AppCompatActivity
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     ListData mData = madapter.mlistData.get(i);
                     Toast.makeText(RegionActivity.this, mData.mtext, Toast.LENGTH_SHORT).show();
+
+                    Intent myIntent = new Intent(getApplicationContext(), RegionNewActivity.class);
+                    startActivity(myIntent);
                 }
             });
         }
