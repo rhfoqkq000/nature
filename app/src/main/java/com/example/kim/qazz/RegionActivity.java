@@ -35,7 +35,6 @@ import java.util.ArrayList;
 public class RegionActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    //new없엉....
     GridLayout bottom;
     BottomSheetBehavior behavior;
     private ListView mlist;
@@ -203,6 +202,10 @@ public class RegionActivity extends AppCompatActivity
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     ListData mData = madapter.mlistData.get(i);
                     Toast.makeText(RegionActivity.this, mData.mtext, Toast.LENGTH_SHORT).show();
+
+                    Intent myIntent = new Intent(getApplicationContext(), RegionNewActivity.class);
+                    startActivity(myIntent);
+
                 }
             });
         }
