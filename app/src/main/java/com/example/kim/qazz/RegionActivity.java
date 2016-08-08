@@ -109,7 +109,7 @@ public class RegionActivity extends AppCompatActivity
                     gPHP = new GettingPHP();
                     count--;
                 }
-                url = "http://return/town/";
+                url = "http://returntocs.xyz/town/";
                 text = spinnerdo.getSelectedItem().toString();
                 Log.i("text 2", text);
                 gPHP.execute(url + text);
@@ -202,6 +202,16 @@ public class RegionActivity extends AppCompatActivity
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     ListData mData = madapter.mlistData.get(i);
                     Toast.makeText(RegionActivity.this, mData.mtext, Toast.LENGTH_SHORT).show();
+                    Log.i("위도", "" + gPHP2.latitude.get(i));
+                    Log.i("경도", "" + gPHP2.longitude.get(i));
+                    Intent myIntent = new Intent(getApplicationContext(), RegionNewActivity.class);
+                    myIntent.putExtra("lat", gPHP2.latitude.get(i));
+                    myIntent.putExtra("long", gPHP2.longitude.get(i));
+                    myIntent.putExtra("fact", gPHP2.townFact.get(i));
+                    myIntent.putExtra("name", gPHP2.townName.get(i));
+                    myIntent.putExtra("good", gPHP2.townGood.get(i));
+                    myIntent.putExtra("bad", gPHP2.townBad.get(i));
+                    startActivity(myIntent);
                 }
             });
         }

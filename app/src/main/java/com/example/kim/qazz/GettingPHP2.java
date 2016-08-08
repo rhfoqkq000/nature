@@ -20,6 +20,19 @@ import java.util.Collections;
 public class GettingPHP2 extends AsyncTask<String, String, String> {
     public static ArrayList<String> address = new ArrayList<>();
 
+    public static ArrayList<Double> longitude = new ArrayList<>();
+
+    public static ArrayList<Double> latitude = new ArrayList<>();
+
+    public static ArrayList<String> townName = new ArrayList<>();
+
+    public static ArrayList<String> townFact = new ArrayList<>();
+
+    public static ArrayList<String> townGood = new ArrayList<>();
+
+    public static ArrayList<String> townBad = new ArrayList<>();
+
+
 //    static ArrayList<String> add = new ArrayList<>();
     String addSt;
 
@@ -51,32 +64,40 @@ public class GettingPHP2 extends AsyncTask<String, String, String> {
         return jsonHtml.toString();
     }
 
-    protected void onPostExecute(String str) {
-        try {
-            // PHP에서 받아온 JSON 데이터를 JSON오브젝트로 변환
-            JSONArray jArray = new JSONArray(str);
-            JSONObject jObject;
-            address.clear();
-            addSt = null;
-            for (int i = 0; i < jArray.length(); i++) {
-                jObject = jArray.getJSONObject(i);
-                address.add(i, jObject.getString("address"));
-                addSt = address.get(i);
+        protected void onPostExecute(String str) {
+            try {
+                // PHP에서 받아온 JSON 데이터를 JSON오브젝트로 변환
+                JSONArray jArray = new JSONArray(str);
+                JSONObject jObject;
+                address.clear();
+                longitude.clear();
+                latitude.clear();
+                townName.clear();
+                townFact.clear();
+                townGood.clear();
+                townBad.clear();
+                addSt = null;
+                for (int i = 0; i < jArray.length(); i++) {
+                    jObject = jArray.getJSONObject(i);
+                    address.add(i, jObject.getString("address"));
+                    longitude.add(i, jObject.getDouble("longitude"));
+                    latitude.add(i, jObject.getDouble("latitude"));
+                    townName.add(i, jObject.getString("townName"));
+                    townFact.add(i, jObject.getString("townFact"));
+                    townGood.add(i, jObject.getString("townGood"));
+                    townBad.add(i, jObject.getString("townBad"));
+                    addSt = address.get(i);
 //                add.add(i, addSt);
 //                    Log.i("테스트 세번째", "First : " + first + " / Second : " + second);
-            }
-
-            Collections.sort(address, String.CASE_INSENSITIVE_ORDER);
+                }
+                Collections.sort(address, String.CASE_INSENSITIVE_ORDER);
             Log.i("두번째 excute 끝났다", "" + address);
-
 //                String zzzz= "" + second2;
 //                String zzz= "" + add;
 //                String zz = "" + address;
 //                tv.setText(zzzz);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 }
-

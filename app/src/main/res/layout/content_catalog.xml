@@ -46,17 +46,17 @@
             android:layout_height="wrap_content"
             android:background="#ffffff">
 
-            <Button
-                android:layout_width="183dp"
-                android:layout_height="wrap_content"
-                android:text="ㄱㄱ"
-                android:id="@+id/btn_send" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ㄴㄴ"
-                android:id="@+id/btn_send2" />
+                android:text="ㄱㄱ"
+                android:layout_marginRight="16dp"
+                android:id="@+id/btn_send" />
 
         </LinearLayout>
 

@@ -98,6 +98,20 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
 
     }
 
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout3);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            Intent intent = new Intent(getBaseContext(), HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -267,7 +281,6 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             final View rootview = inflater.inflate(R.layout.content_catalog, container, false);
-            Intent intent = new Intent(getContext(), CatalogActivity.class);
             final HashMap<String, String> hash = new HashMap<String, String>();
             hash.put("강원도", "6420000");
             hash.put("경기도", "6410000");
@@ -609,14 +622,6 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
 
                     wv.loadUrl(urlStr1);
 
-                }
-            });
-            btnSend2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), HouseActivity.class);
-                    startActivity(intent);
-//                finish();
                 }
             });
             return rootview;
