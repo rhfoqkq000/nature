@@ -49,16 +49,12 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-<<<<<<< HEAD
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ㄱㄱ"
                 android:layout_marginRight="16dp"
                 android:id="@+id/btn_send" />
-
-=======
->>>>>>> master
         </LinearLayout>
 
     </LinearLayout>

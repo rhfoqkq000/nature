@@ -203,7 +203,6 @@ public class RegionActivity extends AppCompatActivity
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     ListData mData = madapter.mlistData.get(i);
                     Toast.makeText(RegionActivity.this, mData.mtext, Toast.LENGTH_SHORT).show();
-<<<<<<< HEAD
                     Log.i("위도", "" + gPHP2.latitude.get(i));
                     Log.i("경도", "" + gPHP2.longitude.get(i));
                     Intent myIntent = new Intent(getApplicationContext(), RegionNewActivity.class);
@@ -213,10 +212,6 @@ public class RegionActivity extends AppCompatActivity
                     myIntent.putExtra("name", gPHP2.townName.get(i));
                     myIntent.putExtra("good", gPHP2.townGood.get(i));
                     myIntent.putExtra("bad", gPHP2.townBad.get(i));
-=======
-
-                    Intent myIntent = new Intent(getApplicationContext(), RegionNewActivity.class);
->>>>>>> master
                     startActivity(myIntent);
                 }
             });
