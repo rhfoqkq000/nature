@@ -7,7 +7,33 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.kim.qazz.RegionNewActivity">
 
+<<<<<<< HEAD
         <include layout="@layout/content_regionnew" />
 
 </android.support.design.widget.CoordinatorLayout>
 
+=======
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp"
+        >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_region_new"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:background="@drawable/radius"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#EFAE2C" />
+
+        <include layout="@layout/content_region_new" />
+    </android.support.design.widget.AppBarLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+>>>>>>> master

@@ -714,8 +714,6 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View rootview = inflater.inflate(R.layout.content_house, container, false);
-//            Intent intent = new Intent(getContext(), HouseActivity.class);
-//            startActivity(intent);
 
             houseText = (TextView) rootview.findViewById(R.id.HouseText);
             sido_cd = new ArrayList<String>();
