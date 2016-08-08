@@ -267,7 +267,6 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             final View rootview = inflater.inflate(R.layout.content_catalog, container, false);
-            Intent intent = new Intent(getContext(), CatalogActivity.class);
             final HashMap<String, String> hash = new HashMap<String, String>();
             hash.put("강원도", "6420000");
             hash.put("경기도", "6410000");
@@ -611,14 +610,6 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
 
                 }
             });
-            btnSend2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), HouseActivity.class);
-                    startActivity(intent);
-//                finish();
-                }
-            });
             return rootview;
         }
         class WebClient extends WebViewClient {
@@ -709,8 +700,6 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View rootview = inflater.inflate(R.layout.content_house, container, false);
-//            Intent intent = new Intent(getContext(), HouseActivity.class);
-//            startActivity(intent);
 
             houseText = (TextView) rootview.findViewById(R.id.HouseText);
             sido_cd = new ArrayList<String>();

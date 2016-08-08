@@ -47,10 +47,6 @@
             android:label=""
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".HouseActivity"
-            android:label=""
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
             android:name=".LodingActivity"
             android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
