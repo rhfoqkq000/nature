@@ -7,6 +7,12 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.kim.qazz.RegionNewActivity">
 
+<<<<<<< HEAD
+        <include layout="@layout/content_regionnew" />
+
+</android.support.design.widget.CoordinatorLayout>
+
+=======
     <android.support.design.widget.AppBarLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,3 +36,4 @@
     </android.support.design.widget.AppBarLayout>
 
 </android.support.design.widget.CoordinatorLayout>
+>>>>>>> master
