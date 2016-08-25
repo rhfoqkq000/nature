@@ -6,10 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -29,12 +27,10 @@ import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONArray;
@@ -62,7 +58,7 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
+    static String ht = "";
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -867,7 +863,7 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            String strJson = houseText.getText().toString();
+                            String strJson = ht;
                             //                        Toast.makeText(getApplicationContext(),"스트링"+strJson,Toast.LENGTH_SHORT).show();
                             StringBuffer sb2 = new StringBuffer();
                             try {
@@ -937,7 +933,8 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                houseText.setText(sb.toString());
+                                ht = sb.toString();
+//                                houseText.setText(sb.toString());
                             }
                         });
                     } catch (Exception e) {

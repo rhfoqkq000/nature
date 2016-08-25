@@ -1,7 +1,6 @@
 package com.example.kim.qazz;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,9 +61,9 @@ public class Success_ListViewAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void addItem(Drawable icon, String text){
+    public void addItem(String text){
         ListData addInfo = new ListData();
-        addInfo.micon = icon;
+//        addInfo.micon = icon;
         addInfo.mtext = text;
 
         mlistData.add(addInfo);
