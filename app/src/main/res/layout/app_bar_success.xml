@@ -24,7 +24,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="#FFFFFF"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:popupTheme="@style/AppTheme.PopupOverlay" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="성공사례"
+                    android:textSize="20dp"/>
+            </android.support.v7.widget.Toolbar>
 
             <View
                 android:layout_width="match_parent"
