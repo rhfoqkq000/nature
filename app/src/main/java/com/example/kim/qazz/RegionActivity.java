@@ -27,71 +27,66 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 //dds
 public class RegionActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     //new없엉....
-    GridLayout bottom;
     BottomSheetBehavior behavior;
-    private ListView mlist;
     private Region_ListViewAdapter madapter;
-    Spinner spinnerdo;
-    Spinner spinnersi;
-    String text;
-    String text2;
-    String text3;
+    String text, text2, text3;
     Activity acti;
     int count = 0;
-    Button okbtn;
     String[] listDo = {"강원도", "경기도", "경상남도", "경상북도", "광주광역시", "대구광역시",
-
             "대전광역시", "부산광역시", "서울특별시", "세종특별자치시", "울산광역시", "인천광역시",
-
             "전라남도", "전라북도", "제주특별자치도", "충청남도", "충청북도"};
 
     //데이터를 받아올 PHP 주소
     String url = "http://returntocs.xyz/town/";
     static ArrayList<String> address = new ArrayList<>();
 
-    // 데이터를 보기위한 TextView
-    TextView tv;
-
     // PHP를 읽어올때 사용할 변수
     public GettingPHP gPHP;
     public GettingPHP2 gPHP2;
     private GoogleApiClient client;
 
+    @BindView(R.id.txtView) TextView tv;
+    @BindView(R.id.bottom_button2) Button okbtn;
+    @BindView(R.id.toolbar2) Toolbar toolbar;
+    @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.nav_view2) NavigationView navigationView;
+    @BindView(R.id.drawer_layout2) DrawerLayout drawer;
+    @BindView(R.id.spinnerDo) Spinner spinnerdo;
+    @BindView(R.id.spinnerSi) Spinner spinnersi;
+    @BindView(R.id.bottom) GridLayout bottom;
+    @BindView(R.id.region_list) ListView mlist;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_region);
+        ButterKnife.bind(this);
 
         gPHP = new GettingPHP();
         acti = this;
-        tv = (TextView) findViewById(R.id.txtView);
-        okbtn = (Button) findViewById(R.id.bottom_button2);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout2);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view2);
         navigationView.setNavigationItemSelectedListener(this);
-
-        //Spinner
-        spinnerdo = (Spinner) findViewById(R.id.spinnerDo);
-        spinnersi = (Spinner) findViewById(R.id.spinnerSi);
         ArrayAdapter<String> ladapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, listDo);
         ladapter.setDropDownViewResource(
@@ -189,11 +184,8 @@ public class RegionActivity extends AppCompatActivity
                 public void run() {
                     mlist.setAdapter(madapter);
                     Log.i("두번째 execute list : ", "" + gPHP2.address);
-//                    Log.i("사이즈 ", "" + gPHP2.address.size());
                     for (int i = 0; i < gPHP2.address.size(); i++) {
-                        //list의 아이콘와 내용을 적는 곳
                         madapter.addItem(ContextCompat.getDrawable(RegionActivity.this, R.drawable.school1), gPHP2.address.get(i));
-//                        madapter.addItem(getResources().getDrawable(R.drawable.hospital1), gPHP2.address.get(i));
                     }
                 }
             }, 200);
@@ -234,19 +226,13 @@ public class RegionActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -257,7 +243,6 @@ public class RegionActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
         Intent intent;
         if (id == R.id.nav_home) {
@@ -290,17 +275,11 @@ public class RegionActivity extends AppCompatActivity
     @Override
     public void onStart() {
         super.onStart();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
         Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Region Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
+                Action.TYPE_VIEW,
+                "Region Page",
                 Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
                 Uri.parse("android-app://com.example.kim.qazz/http/host/path")
         );
         AppIndex.AppIndexApi.start(client, viewAction);
@@ -309,16 +288,11 @@ public class RegionActivity extends AppCompatActivity
     @Override
     public void onStop() {
         super.onStop();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
+
         Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Region Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
+                Action.TYPE_VIEW,
+                "Region Page",
                 Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
                 Uri.parse("android-app://com.example.kim.qazz/http/host/path")
         );
         AppIndex.AppIndexApi.end(client, viewAction);

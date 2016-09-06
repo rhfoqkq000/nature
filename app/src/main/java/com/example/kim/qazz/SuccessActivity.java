@@ -1,5 +1,6 @@
 package com.example.kim.qazz;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,7 +17,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -34,54 +34,48 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+
 public class SuccessActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private ListView mlist;
-    private Success_ListViewAdapter madapter;
+
     private GoogleApiClient client;
-    private final long FINISH_INTERVAL_TIME = 2000;
-    private long backPressedTime = 0;
-    public static int position;
     static HashMap<String, String> dbArticle = new HashMap<String, String>();
     Handler handler = new Handler();
     String urlStr1 = "";
-    String strJson = "";
-    TextView tvTitle;
     String loadHtmlStr = "";
     ArrayList<String> dbTitle = new ArrayList<String>();
+    ProgressDialog mProgressDialog;
+
+    @BindView(R.id.toolbar4) Toolbar toolbar;
+    @BindView(R.id.drawer_layout4) DrawerLayout drawer;
+    @BindView(R.id.nav_view4) NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_success);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar4);
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout4);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view4);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
-
-        tvTitle = (TextView)findViewById(R.id.tvTitle);
-        TextView tvContent = (TextView)findViewById(R.id.tvDetail);
+        showProgressDialog();
 
         urlStr1 = "http://returntocs.xyz/suex";
-//                TextView tv3 = (TextView) findViewById(R.id.textView2);
-//                tv3.setText(urlStr1);
         loadHtml();
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
-//                Toast.makeText(getApplicationContext(),"loadHtmlStr떴떴냐2"+loadHtmlStr, Toast.LENGTH_SHORT).show();
                 try {
                     JSONArray jArray = new JSONArray(loadHtmlStr);
 
@@ -90,22 +84,10 @@ public class SuccessActivity extends AppCompatActivity
                         String title = jObject.getString("title");
                         String content = jObject.getString("contents");
                         dbArticle.put(title, content);
-//                        Toast.makeText(getApplicationContext(),"dbArticle떳니"+dbArticle,Toast.LENGTH_SHORT).show();
-
-//                        sb2.append(
-//                          "시도:"+sido+"\n"+"시군:"+sigun+"\n"
-//                        );
-//                        Toast.makeText(getApplicationContext(),"sb"+sb2.toString(),Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(getApplicationContext(),"11111111", Toast.LENGTH_SHORT).show();
                     }
-
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
-
-
-//                tv3.setText(sb2.toString());
-//                Toast.makeText(getApplicationContext(),"dbArticle떳니"+dbArticle, Toast.LENGTH_SHORT).show();
             }
         }, 2000);
 
@@ -114,69 +96,27 @@ public class SuccessActivity extends AppCompatActivity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                Toast.makeText(getApplicationContext(),"2222222", Toast.LENGTH_SHORT).show();
-
                 Set key = dbArticle.keySet();
                 for (Iterator iterator = key.iterator(); iterator.hasNext();) {
                     String keyName = (String) iterator.next();
                     dbTitle.add(keyName);
                 }
-//                Toast.makeText(getApplicationContext(),"33333333", Toast.LENGTH_SHORT).show();
-
                 mlist = (ListView)findViewById(R.id.success_list);
                 mlist.setAdapter(adapter);
-
                 mlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         String gt = (""+parent.getItemAtPosition(position));
-//                dbArticle.get(parent.getItemAtPosition(position));
-//                Toast.makeText(getApplicationContext(),""+dbArticle.get(parent.getItemAtPosition(position)), Toast.LENGTH_SHORT).show();
-
-
-
-
-
                         Intent intent = new Intent(getBaseContext(), ArticleActivity.class);
                         intent.putExtra("dbTitle",(String)parent.getItemAtPosition(position));
                         intent.putExtra("dbArticle",dbArticle);
-//                Toast.makeText(getApplicationContext(),""+(String)parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         finish();
                     }
                 });
+                hideProgressDialog();
             }
         }, 2000);
-
-
-//        final DBHelper dbHelper = new DBHelper(getApplicationContext(), "crud.db", null, 4);//흑흑씨발이거야이거
-////        Toast.makeText(getApplicationContext(),""+dbHelper.getResult(), Toast.LENGTH_SHORT).show();
-//        dbArticle = dbHelper.getResult();
-
-
-
-
-//        madapter = new Success_ListViewAdapter();
-//        mlist.setAdapter(madapter);
-//
-//
-//        //list의 아이콘와 내용을 적는 곳
-//        madapter.addItem("직장과 농사 병행하며 '표고 전업농' 준비해요");
-//
-//        mlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-////                ListData mData = madapter.mlistData.get(i);
-////                Toast.makeText(SuccessActivity.this,mData.mtext,Toast.LENGTH_SHORT).show();
-//                position = i;
-////                Toast.makeText(getApplicationContext(),"떴니"+position,Toast.LENGTH_SHORT).show();
-//
-//                Intent intent = new Intent(getApplicationContext(),Webviiiew.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
-
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
@@ -196,30 +136,22 @@ public class SuccessActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
         Intent intent;
         if (id == R.id.nav_home) {
@@ -248,18 +180,11 @@ public class SuccessActivity extends AppCompatActivity
         return true;
     }
 
-
-
-
-
-
-    void loadHtml() {
+    String loadHtml() {
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 final StringBuffer sb = new StringBuffer();
-
                 try {
                     URL url = new URL(urlStr1);
                     HttpURLConnection conn =
@@ -269,7 +194,6 @@ public class SuccessActivity extends AppCompatActivity
                         conn.setUseCaches(false);
                         if (conn.getResponseCode()
                                 == HttpURLConnection.HTTP_OK) {
-                            //    데이터 읽기
                             BufferedReader br
                                     = new BufferedReader(new InputStreamReader
                                     (conn.getInputStream(), "utf-8"));//"utf-8"
@@ -282,8 +206,6 @@ public class SuccessActivity extends AppCompatActivity
                         }
                         conn.disconnect(); // 연결 끊기
                     }
-                    // 값을 출력하기
-//                    Log.d("test", sb.toString());
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -297,9 +219,19 @@ public class SuccessActivity extends AppCompatActivity
             }
         });
         t.start(); // 쓰레드 시작
+        return loadHtmlStr;
     }
 
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = ProgressDialog.show(SuccessActivity.this, "로딩중...", "잠시만 기다려주세요.");
+            Log.i("야야로딩시작한다","1");
+        }
+    }
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+            Log.i("야야로딩끝났다","1");
+        }
+    }
 }
-
-
-

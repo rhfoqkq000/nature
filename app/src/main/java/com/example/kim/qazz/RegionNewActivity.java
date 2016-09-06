@@ -15,6 +15,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
 <<<<<<< HEAD
  * Created by kim on 16. 8. 8.
@@ -26,10 +29,9 @@ public class RegionNewActivity extends AppCompatActivity implements OnMapReadyCa
     String townFact;
     String townGood;
     String townBad;
+    @BindView(R.id.txtView) TextView tv;
 
-    //static final LatLng SEOUL = new LatLng(35.1997796, 128.60543);
     private GoogleMap googleMap;
-    TextView tv = null;
     @Override
     public void onMapReady(final GoogleMap map) {
         LatLng city = new LatLng(latitude, longitude);
@@ -50,8 +52,8 @@ public class RegionNewActivity extends AppCompatActivity implements OnMapReadyCa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar_region_new);
+        ButterKnife.bind(this);
 
-        tv = (TextView) findViewById(R.id.txtView);
         Intent myintent = getIntent();
         latitude = myintent.getDoubleExtra("lat", 37.6);
         longitude = myintent.getDoubleExtra("long", 127.0);
@@ -70,7 +72,6 @@ public class RegionNewActivity extends AppCompatActivity implements OnMapReadyCa
         Log.i("위도/경도/마을이름/시설/굿/뱃", latitude +" , " + longitude + " , " + townName + " , "
                 + townFact + " , " + townGood + " , " + townBad);
         tv.append("마을이름  :  "+townName+"\n\n"+"마을시설  :  "+townFact+"\n\n"+"Good  :  "+townGood+"\n\n"+"Bad  :  "+townBad+"\n");
-        //tv.setText("마을이름  :  "+townName+"\n\n"+"마을시설  :  "+townFact+"\n\n"+"Good  :  "+townGood+"\n\n"+"Bad  :  "+townBad+"\n");
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);

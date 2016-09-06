@@ -18,34 +18,37 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class NoticeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ListView mlist;
     private Notice_ListViewAdapter madapter;
     private GoogleApiClient client;
     private final long FINISH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
-
+    @BindView(R.id.toolbar1) Toolbar toolbar;
+    @BindView(R.id.drawer_layout1) DrawerLayout drawer;
+    @BindView(R.id.nav_view1) NavigationView navigationView;
+    @BindView(R.id.notice_list) ListView mlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout1);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view1);
         navigationView.setNavigationItemSelectedListener(this);
 
         madapter = new Notice_ListViewAdapter();
-        mlist = (ListView)findViewById(R.id.notice_list);
         mlist.setAdapter(madapter);
 
         //list의 아이콘와 내용을 적는 곳
@@ -76,30 +79,23 @@ public class NoticeActivity extends AppCompatActivity implements NavigationView.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
         Intent intent;
         if (id == R.id.nav_home) {

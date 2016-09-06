@@ -1,4 +1,6 @@
 package com.example.kim.qazz;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -59,6 +61,7 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     static String ht = "";
+    ProgressDialog mProgressDialog;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -78,20 +81,15 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout3);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view3);
         navigationView.setNavigationItemSelectedListener(this);
-
-
     }
 
     @Override
@@ -107,7 +105,6 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
             finish();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -167,23 +164,10 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
 
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
     public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
         private static final String ARG_SECTION_NUMBER = "section_number";
-
         public PlaceholderFragment() {
         }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -202,20 +186,12 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
         }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position){
                 case 0:
                     return SectionsFragment1.newInstance(position + 1);
@@ -226,7 +202,6 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
         }
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 2;
         }
 
@@ -470,8 +445,6 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
                 String keyName = (String) iterator.next();
                 arrayList9.add(keyName);
             }
-//        Log.i("떴냐떴냐떴냐",""+arrayList); 잘뜸
-            //mv = getLayoutInflater().inflate(R.layout.content_catalog, );
             btnSend = (Button) rootview.findViewById(R.id.btn_send);
             btnSend2 = (Button) rootview.findViewById(R.id.btn_send2);
 
@@ -486,10 +459,7 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
             adapter7 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, arrayList7);
             adapter8 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, arrayList8);
             adapter9 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, arrayList9);
-
-//        Log.i("aaaaaaaaaaaaaaaaaa",""+Adapter.isEmpty());-false
             sp.setAdapter(adapter);
-//        Log.i("aaaaaaaaaaaaaaaaaa",""+adapter.isEmpty());
             sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view,
@@ -532,75 +502,54 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
                             break;
                     }
                 }
-
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
                 }
             });
+
             s2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view,
                                            int position, long id) {
-//                tv2.setText(""+
-//                        parent.getItemAtPosition(position));
                     switch (sendM2) {
                         case "강원도":
                             sendM2 = hash2.get(parent.getItemAtPosition(position));
-//                        Toast.makeText(getApplicationContext(),"호출"+sendM2,Toast.LENGTH_SHORT).show();
-
                             tvStr2 = sendM2;
                             break;
                         case "경상남도":
                             sendM2 = hash3.get(parent.getItemAtPosition(position));
-//                        Toast.makeText(getApplicationContext(),"호출"+sendM2,Toast.LENGTH_SHORT).show();
-
                             tvStr2 = sendM2;
                             break;
                         case "경상북도":
                             sendM2 = hash4.get(parent.getItemAtPosition(position));
-//                        Toast.makeText(getApplicationContext(),"호출"+sendM2,Toast.LENGTH_SHORT).show();
-
                             tvStr2 = sendM2;
                             break;
                         case "전라남도":
                             sendM2 = hash5.get(parent.getItemAtPosition(position));
-//                        Toast.makeText(getApplicationContext(),"호출"+sendM2,Toast.LENGTH_SHORT).show();
-
                             tvStr2 = sendM2;
                             break;
                         case "전라북도":
                             sendM2 = hash6.get(parent.getItemAtPosition(position));
-//                        Toast.makeText(getApplicationContext(),"호출"+sendM2,Toast.LENGTH_SHORT).show();
-
                             tvStr2 = sendM2;
                             break;
                         case "충청남도":
                             sendM2 = hash7.get(parent.getItemAtPosition(position));
-//                        Toast.makeText(getApplicationContext(),"호출"+sendM2,Toast.LENGTH_SHORT).show();
-
                             tvStr2 = sendM2;
                             break;
                         case "충청북도":
                             sendM2 = hash8.get(parent.getItemAtPosition(position));
-//                        Toast.makeText(getApplicationContext(),"호출"+sendM2,Toast.LENGTH_SHORT).show();
-
                             tvStr2 = sendM2;
                             break;
                         case "경기도":
                             sendM2 = hash10.get(parent.getItemAtPosition(position));
-//                        Toast.makeText(getApplicationContext(),"호출"+sendM2,Toast.LENGTH_SHORT).show();
-
                             tvStr2 = sendM2;
                             break;
                         default:
                             sendM2 = hash10.get(parent.getItemAtPosition(position));
-//                        Toast.makeText(getApplicationContext(),"호출"+sendM2,Toast.LENGTH_SHORT).show();
-
                             tvStr2 = ("" +
                                     parent.getItemAtPosition(position));
                     }
                 }
-
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
                 }
@@ -609,15 +558,11 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
             btnSend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "지금은 곤란하다. 잠시만 기다려달라.", Toast.LENGTH_SHORT).show();
-//                String sendM = hash.get(tv.getText().toString())+"&"+sendM2;
-//    WebView wv =(WebView)findViewById(R.id.webView);
+                    Toast.makeText(getActivity(), "잠시만 기다려주세요.", Toast.LENGTH_SHORT).show();
                     urlStr1 = "http://www.returnfarm.com/rtf/m3/n36/business/selectBusinessInfo.do?sido_cd=" + sendM + "&sigun_cd=" + sendM2;
                     wv = (WebView) rootview.findViewById(R.id.webView);
                     wv.setWebViewClient(new WebViewClient());
-
                     wv.loadUrl(urlStr1);
-
                 }
             });
             return rootview;
@@ -630,18 +575,14 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
         }
 
         public static void jsonToMap(String t) throws JSONException {
-
             HashMap<String, String> map = new HashMap<String, String>();
             JSONObject jObject = new JSONObject(t);
             Iterator<?> keys = jObject.keys();
-
             while( keys.hasNext() ){
                 String key = (String)keys.next();
                 String value = jObject.getString(key);
                 map.put(key, value);
-
             }
-
             Log.i("","json : "+jObject);
             Log.i("","map : "+map);
         }
@@ -651,7 +592,6 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
                 @Override
                 public void run() {
                     final StringBuffer sb = new StringBuffer();
-
                     try {
                         URL url = new URL(urlStr1);
                         HttpURLConnection conn =
@@ -680,7 +620,6 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
                 }
             });
             t.start(); // 쓰레드 시작
-
         }
     }
 
@@ -787,11 +726,8 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
             cndqnr.add("증평군");
             cndqnr.add("충주시");
 
-            //        mv = getLayoutInflater().inflate(R.layout.activity_house, null);
-
             Spinner ahspinner1 = (Spinner) rootview.findViewById(R.id.ahspinner1);
             final Spinner ahspinner2 = (Spinner) rootview.findViewById(R.id.ahspinner2);
-            //        Toast.makeText(getApplicationContext(),"찾았냐",Toast.LENGTH_SHORT).show();
             ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, sido_cd);
             final ArrayAdapter adapter2 = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, rkddnjs);
             final ArrayAdapter adapter3 = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, rudska);
@@ -802,13 +738,10 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
             final ArrayAdapter adapter8 = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, cndqnr);
 
             ahspinner1.setAdapter(adapter);
-            //                        Toast.makeText(getApplicationContext(),"어댑터떴냐",Toast.LENGTH_SHORT).show();
-
             ahspinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     getStr1 = (""+parent.getItemAtPosition(position));
-                    //                Toast.makeText(getApplicationContext(),"선택했냐",Toast.LENGTH_SHORT).show();
                     switch(getStr1){
                         case "강원도":
                             ahspinner2.setAdapter(adapter2);
@@ -835,7 +768,6 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
                 }
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-
                 }
             });
 
@@ -844,13 +776,9 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     getStr2 = (""+parent.getItemAtPosition(position));
                     urlStr1 = "http://returntocs.xyz/helpHouse/"+getStr1+"&"+getStr2;
-                    Toast.makeText(getActivity(),""+urlStr1, Toast.LENGTH_SHORT).show();
-
                 }
-
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-
                 }
             });
 
@@ -859,16 +787,13 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
                 @Override
                 public void onClick(View v) {
                     loadHtml();
-                    final Handler mHandler = new Handler();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             String strJson = ht;
-                            //                        Toast.makeText(getApplicationContext(),"스트링"+strJson,Toast.LENGTH_SHORT).show();
                             StringBuffer sb2 = new StringBuffer();
                             try {
                                 JSONArray jArray = new JSONArray(strJson);
-
                                 for (int i = 0; i < jArray.length(); i++) {
                                     JSONObject jObject = jArray.getJSONObject(i);
                                     String sido = jObject.getString("sido");
@@ -877,13 +802,13 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
                                     String scale = jObject.getString("scale");
                                     String fee = jObject.getString("fee");
                                     String period = jObject.getString("period");
-                                    //                                String day = jObject.getString("day");
                                     String tel = jObject.getString("tel");
+                                    if(tel.equals("NULL")){
+                                        tel = "해당 자료 없음";
+                                    }
                                     sb2.append(
                                             "시도 : "+sido+"\n"+"시군 : "+sigun+"\n"+"이름 : "+name+"\n"+"임대료 : "+fee+"\n"+"기간 : "+period+"\n"+"전화번호 : "+tel+"\n\n"
                                     );
-                                    //                                Toast.makeText(getApplicationContext(),"sb"+sb2.toString(),Toast.LENGTH_SHORT).show();
-
                                 }
 
                             }catch (JSONException e){
@@ -892,8 +817,6 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
                             houseText.setText(sb2.toString());
                         }
                     }, 1000);
-
-
                 }
             });
             return rootview;
@@ -901,7 +824,6 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
 
         void loadHtml() {
             Thread t = new Thread(new Runnable() {
-                //            houseText = (TextView)findViewById(R.id.HouseText);
                 @Override
                 public void run() {
                     final StringBuffer sb = new StringBuffer();
@@ -945,5 +867,17 @@ public class SupportActivity extends AppCompatActivity implements NavigationView
             t.start(); // 쓰레드 시작
         }
     }
-}
 
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = ProgressDialog.show(SupportActivity.this, "로딩중...", "잠시만 기다려주세요!");
+            Log.i("야야로딩시작한다","1");
+        }
+    }
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+            Log.i("야야로딩끝났다","1");
+        }
+    }
+}

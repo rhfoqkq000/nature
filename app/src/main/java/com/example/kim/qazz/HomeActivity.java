@@ -1,5 +1,6 @@
 package com.example.kim.qazz;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,30 +14,34 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 //R오류가 뜬다면 Gradle Scripts -> build.gradle(Module:app)의 dependencies에 compile 'com.google.android.gms:play-services-appindexing:8.1.0'을 추가
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    ProgressDialog mProgressDialog;
     private final long FINISH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.drawer_layout) DrawerLayout drawer;
+    @BindView(R.id.nav_view) NavigationView navigationView;
 //현정아......
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);   //toolbar title 삭제
 
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
     }
@@ -45,7 +50,6 @@ public class HomeActivity extends AppCompatActivity
     public void onBackPressed() {
         long tempTime = System.currentTimeMillis();
         long intervalTime = tempTime - backPressedTime;
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {    //뒤로가기 버튼 두 번 누르면 종료
@@ -116,17 +120,9 @@ public class HomeActivity extends AppCompatActivity
     }
 
     public void NoticeBT(View v){
-//        Intent intent;
         Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
         startActivity(intent);
         finish();
-//        if (Build.VERSION.SDK_INT <= 19) {
-//            intent = new Intent(getApplicationContext(), Test.class);
-//            startActivity(intent);
-//        }else{
-//            intent = new Intent(getApplicationContext(), Layout.class);
-//            startActivity(intent);
-//        }
     }
 
     public void RegionBT(View v){
