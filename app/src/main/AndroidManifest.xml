@@ -63,8 +63,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB8qV1swjP6SpZ_4wDggapwlXeViIS-dOY" />
 
-        j
-        <activity android:name=".ArticleActivity"></activity>
+
+        <activity android:name=".ArticleActivity"
+            android:label=""
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

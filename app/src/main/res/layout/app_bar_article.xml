@@ -24,7 +24,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="#FFFFFF"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:popupTheme="@style/AppTheme.PopupOverlay" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="성공사례"
+                    android:textSize="20dp"/>
+            </android.support.v7.widget.Toolbar>
 
             <View
                 android:layout_width="match_parent"
@@ -33,27 +39,6 @@
                 android:background="#EFAE2C" />
         </android.support.design.widget.AppBarLayout>
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/tvTitle" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/scrollView2" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/tvDetail" />
-        </ScrollView>
-
+        <include layout="@layout/content_article" />
     </LinearLayout>
-
 </android.support.design.widget.CoordinatorLayout>
