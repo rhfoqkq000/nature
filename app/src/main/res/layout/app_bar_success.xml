@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context="com.example.kim.qazz.SuccessActivity">
 
     <LinearLayout
@@ -38,13 +37,25 @@
                 android:layout_alignParentBottom="true"
                 android:background="#EFAE2C" />
         </android.support.design.widget.AppBarLayout>
-
-
-        <ListView
-            android:id="@+id/success_list"
+        <android.support.v4.widget.DrawerLayout
+            android:id="@+id/drawer_layout4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            tools:openDrawer="start">
 
+            <ListView
+                android:id="@+id/success_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.design.widget.NavigationView
+                android:id="@+id/nav_view4"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="#FFFFFF"
+                app:menu="@menu/activity_main_drawer" />
+        </android.support.v4.widget.DrawerLayout>
     </LinearLayout>
-
 </android.support.design.widget.CoordinatorLayout>

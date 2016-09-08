@@ -9,7 +9,7 @@
     app:behavior_hideable="true"
     app:behavior_peekHeight="100dp"
     app:layout_behavior="@string/bottom_sheet_behavior"
-    android:background="#FFFFFF">
+    android:background="#F6F6F6">
 
     <TextView
         android:id="@+id/bottom_text1"
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_column="0"
         android:layout_row="0"
-        android:paddingLeft="10dp"
+        android:paddingLeft="8dp"
         android:text="지역을 선택하세요"
         android:layout_marginLeft="8dp"
         android:textColor="#000000"

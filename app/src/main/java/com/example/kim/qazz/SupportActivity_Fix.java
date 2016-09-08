@@ -43,7 +43,7 @@ public class SupportActivity_Fix  extends AppCompatActivity implements Navigatio
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_support);
+        setContentView(R.layout.app_bar_support);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);

@@ -60,7 +60,7 @@ public class RegionActivity extends AppCompatActivity
     public GettingPHP2 gPHP2;
     private GoogleApiClient client;
 
-    @BindView(R.id.txtView) TextView tv;
+//    @BindView(R.id.txtView) TextView tv;
     @BindView(R.id.bottom_button2) Button okbtn;
     @BindView(R.id.toolbar2) Toolbar toolbar;
     @BindView(R.id.fab) FloatingActionButton fab;
@@ -75,7 +75,7 @@ public class RegionActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_region);
+        setContentView(R.layout.app_bar_region);
         ButterKnife.bind(this);
 
         gPHP = new GettingPHP();

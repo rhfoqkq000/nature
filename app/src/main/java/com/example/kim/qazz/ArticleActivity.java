@@ -18,33 +18,21 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ArticleActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ArticleActivity extends AppCompatActivity {
 //    String urlStr1 = "";
 //    Handler handler = new Handler();
 //    String strJson = "";
 //    String source = "";
     ProgressDialog mProgressDialog;
 
-    @BindView(R.id.toolbar5) Toolbar toolbar;
-    @BindView(R.id.drawer_layout5) DrawerLayout drawer;
-    @BindView(R.id.nav_view5) NavigationView navigationView;
     @BindView(R.id.tvTitle) TextView tvTitle;
     @BindView(R.id.tvDetail) TextView tvDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_article);
+        setContentView(R.layout.content_article);
         ButterKnife.bind(this);
-
-        setSupportActionBar(toolbar);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView.setNavigationItemSelectedListener(this);
 
         Intent intent = getIntent();
         String dbTitle = intent.getExtras().getString("dbTitle");
@@ -52,65 +40,6 @@ public class ArticleActivity extends AppCompatActivity implements NavigationView
         tvTitle.setText(dbTitle);
         tvDetail.setText(dbArticle.get(dbTitle));
     }
-
-
-    @Override
-    public void onBackPressed() {
-            Intent intent = new Intent(getBaseContext(), SuccessActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-            finish();
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        Intent intent;
-        if (id == R.id.nav_home) {
-            intent = new Intent(getApplicationContext(),HomeActivity.class);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.nav_notice) {
-            intent = new Intent(getApplicationContext(),NoticeActivity.class);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.nav_region) {
-            intent = new Intent(getApplicationContext(),RegionActivity.class);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.nav_support) {
-            intent = new Intent(getApplicationContext(),SupportActivity_Fix.class);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.nav_success) {
-            intent = new Intent(getApplicationContext(),SuccessActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout5);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-
 
     private void showProgressDialog() {
         if (mProgressDialog == null) {

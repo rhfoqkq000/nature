@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.app_bar_home);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);

@@ -36,7 +36,7 @@ public class NoticeActivity extends AppCompatActivity implements NavigationView.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notice);
+        setContentView(R.layout.app_bar_notice);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
