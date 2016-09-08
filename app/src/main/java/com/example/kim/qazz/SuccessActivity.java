@@ -10,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +38,6 @@ import butterknife.ButterKnife;
 
 public class SuccessActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-//    private ListView mlist;
 
     private GoogleApiClient client;
     static HashMap<String, String> dbArticle = new HashMap<String, String>();
@@ -47,7 +45,6 @@ public class SuccessActivity extends AppCompatActivity
     String urlStr1, loadHtmlStr = "";
     ArrayList<String> dbTitle = new ArrayList<String>();
     ProgressDialog mProgressDialog;
-//    Thread t;
 
     @BindView(R.id.toolbar4) Toolbar toolbar;
     @BindView(R.id.drawer_layout4) DrawerLayout drawer;
@@ -73,26 +70,6 @@ public class SuccessActivity extends AppCompatActivity
 
         urlStr1 = "http://returntocs.xyz/suex";
         loadHtml(urlStr1);
-//        String strstrstr = loadHtml(urlStr1);
-//        Log.i("strstrstr떳닝",""+strstrstr);
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-////                    t.join();
-//                    JSONArray jArray = new JSONArray(loadHtmlStr);
-//
-//                    for (int i = 0; i < jArray.length(); i++) {
-//                        JSONObject jObject = jArray.getJSONObject(i);
-//                        String title = jObject.getString("title");
-//                        String content = jObject.getString("contents");
-//                        dbArticle.put(title, content);
-//                    }
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-//            }
-//        }, 1000);
 
         final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, dbTitle);
         new Handler().postDelayed(new Runnable() {
@@ -117,9 +94,6 @@ public class SuccessActivity extends AppCompatActivity
                         finish();
                     }
                 });
-//        final ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, dbTitle);
-//        mlist.setAdapter(adapter);
-
         hideProgressDialog();
             }
         }, 1000);
@@ -180,7 +154,6 @@ public class SuccessActivity extends AppCompatActivity
             startActivity(intent);
             finish();
         }
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout4);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -227,8 +200,6 @@ public class SuccessActivity extends AppCompatActivity
                 }
             }
         });
-
-        Log.i("loadHtmlStr떴떴냐", loadHtmlStr);
         t.start(); // 쓰레드 시작
         return loadHtmlStr;
     }
@@ -236,13 +207,11 @@ public class SuccessActivity extends AppCompatActivity
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = ProgressDialog.show(SuccessActivity.this, "로딩중...", "잠시만 기다려주세요.");
-            Log.i("야야로딩시작한다","1");
         }
     }
     private void hideProgressDialog() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.hide();
-            Log.i("야야로딩끝났다","1");
         }
     }
 }

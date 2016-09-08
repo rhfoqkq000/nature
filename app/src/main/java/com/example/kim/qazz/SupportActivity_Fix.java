@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
  */
 public class SupportActivity_Fix  extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ActionBar.TabListener{
     private SectionsPagerAdapter mSectionsPagerAdapter;
+
     @BindView(R.id.toolbar3)
     Toolbar toolbar;
     @BindView(R.id.container)

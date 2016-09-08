@@ -4,17 +4,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
+
+import com.thefinestartist.finestwebview.FinestWebView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,11 +36,6 @@ public class ReturnCenterFragment extends Fragment {
     View mv;
     WebView wv;
     Spinner sp, s2 = null;
-
-//    @BindView(R.id.btn_send) Button btnSend;
-//    @BindView(R.id.btn_send2) Button btnSend2;
-//    @BindView(R.id.saspinner1) Spinner sp;
-//    @BindView(R.id.saspinner2) Spinner s2;
 
     public ReturnCenterFragment() {
     }
@@ -205,8 +199,6 @@ public class ReturnCenterFragment extends Fragment {
             String keyName = (String) iterator.next();
             arrayList.add(keyName);
         }
-        Log.i("arrayList 뭐가 떠요?",""+arrayList);
-
         Set key2 = hash2.keySet();
         arrayList2 = new ArrayList<String>();
         for (Iterator iterator = key2.iterator(); iterator.hasNext(); ) {
@@ -259,8 +251,6 @@ public class ReturnCenterFragment extends Fragment {
         sp = (Spinner) rootview.findViewById(R.id.saspinner1);
         s2 = (Spinner) rootview.findViewById(R.id.saspinner2);
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, arrayList);
-        Log.i("adapter는 뭐뜨는데용",""+adapter);
-        Log.i("sp는뜨긴떠욤?",""+sp);
         adapter2 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, arrayList2);
         adapter3 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, arrayList3);
         adapter4 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, arrayList4);
@@ -370,11 +360,9 @@ public class ReturnCenterFragment extends Fragment {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "잠시만 기다려주세요.", Toast.LENGTH_SHORT).show();
                 urlStr1 = "http://www.returnfarm.com/rtf/m3/n36/business/selectBusinessInfo.do?sido_cd=" + sendM + "&sigun_cd=" + sendM2;
-                wv = (WebView) rootview.findViewById(R.id.webView);
-                wv.setWebViewClient(new WebViewClient());
-                wv.loadUrl(urlStr1);
+                new FinestWebView.Builder(getContext()).titleDefault("지자체지원사업")
+                        .show(urlStr1);
             }
         });
         return rootview;
