@@ -182,7 +182,7 @@ public class ReturnHomeFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 getStr2 = (""+parent.getItemAtPosition(position));
 //                urlStr1 = "http://returntocs.xyz/helpHouse/"+getStr1+"&"+getStr2;
-                urlStr1 = "http://returntocs.xyz/helpHouse/";
+                urlStr1 = "http://45.32.61.201:3000/nature/";
 
             }
             @Override
@@ -197,13 +197,29 @@ public class ReturnHomeFragment extends Fragment {
                 Retrofit client = new Retrofit.Builder().baseUrl(urlStr1)
                         .addConverterFactory(GsonConverterFactory.create()).build();
                 HelpHouse helpHouse = client.create(HelpHouse.class);
-                final Call<Repo> call = helpHouse.repo();
+                final Call<Repo> call = helpHouse.repo(getStr1, getStr2);
                 call.enqueue(new Callback<Repo>() {
                     @Override
                     public void onResponse(Call<Repo> call, Response<Repo> response) {
                         if (response.isSuccessful()) {
                             Repo repo = response.body();
-                            Log.i("REPO:9",""+repo.getFee());
+                            StringBuilder sb = new StringBuilder();
+                            for(int i = 0; i<repo.getResult_data().size(); i++){
+                                String tel = "";
+                                if(repo.getResult_data().get(i).getTel()==null){
+                                    tel = "해당 자료 없음";
+                                }else{
+                                    tel = repo.getResult_data().get(i).getTel();
+                                }
+                                sb.append("시도 : "+repo.getResult_data().get(i).getSido()
+                                        +"\n시군 : "+repo.getResult_data().get(i).getSigun()
+                                        +"\n이름 : "+repo.getResult_data().get(i).getName()
+                                        +"\n요금 : "+repo.getResult_data().get(i).getFee()
+                                        +"\n기간 : "+repo.getResult_data().get(i).getPeriod()
+                                        +"\n전화번호 : "+tel+"\n\n");
+                            }
+
+                            houseText.setText(sb);
                         }
                     }
 
