@@ -39,7 +39,7 @@
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SupportActivity"
+            android:name=".SupportActivity_Fix"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

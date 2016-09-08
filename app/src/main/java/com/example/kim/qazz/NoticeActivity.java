@@ -111,7 +111,7 @@ public class NoticeActivity extends AppCompatActivity implements NavigationView.
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_support) {
-            intent = new Intent(getApplicationContext(),SupportActivity.class);
+            intent = new Intent(getApplicationContext(),SupportActivity_Fix.class);
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_success) {

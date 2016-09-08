@@ -143,7 +143,7 @@ public class RegionActivity extends AppCompatActivity
         });
 
         //region_Bottom
-        bottom = (GridLayout) findViewById(R.id.bottom);
+//        bottom = (GridLayout) findViewById(R.id.bottom);
         behavior = BottomSheetBehavior.from(bottom);
         behavior.setPeekHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150.f, getResources().getDisplayMetrics()));
         behavior.setHideable(true);
@@ -258,7 +258,7 @@ public class RegionActivity extends AppCompatActivity
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_support) {
-            intent = new Intent(getApplicationContext(),SupportActivity.class);
+            intent = new Intent(getApplicationContext(),SupportActivity_Fix.class);
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_success) {

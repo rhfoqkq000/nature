@@ -22,7 +22,6 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -40,22 +39,23 @@ import butterknife.ButterKnife;
 
 public class SuccessActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private ListView mlist;
+//    private ListView mlist;
 
     private GoogleApiClient client;
     static HashMap<String, String> dbArticle = new HashMap<String, String>();
     Handler handler = new Handler();
-    String urlStr1 = "";
-    String loadHtmlStr = "";
+    String urlStr1, loadHtmlStr = "";
     ArrayList<String> dbTitle = new ArrayList<String>();
     ProgressDialog mProgressDialog;
+//    Thread t;
 
     @BindView(R.id.toolbar4) Toolbar toolbar;
     @BindView(R.id.drawer_layout4) DrawerLayout drawer;
     @BindView(R.id.nav_view4) NavigationView navigationView;
+    @BindView(R.id.success_list) ListView mlist;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_success);
         ButterKnife.bind(this);
@@ -72,27 +72,29 @@ public class SuccessActivity extends AppCompatActivity
         showProgressDialog();
 
         urlStr1 = "http://returntocs.xyz/suex";
-        loadHtml();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    JSONArray jArray = new JSONArray(loadHtmlStr);
-
-                    for (int i = 0; i < jArray.length(); i++) {
-                        JSONObject jObject = jArray.getJSONObject(i);
-                        String title = jObject.getString("title");
-                        String content = jObject.getString("contents");
-                        dbArticle.put(title, content);
-                    }
-                }catch (JSONException e){
-                    e.printStackTrace();
-                }
-            }
-        }, 2000);
+        loadHtml(urlStr1);
+//        String strstrstr = loadHtml(urlStr1);
+//        Log.i("strstrstr떳닝",""+strstrstr);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+////                    t.join();
+//                    JSONArray jArray = new JSONArray(loadHtmlStr);
+//
+//                    for (int i = 0; i < jArray.length(); i++) {
+//                        JSONObject jObject = jArray.getJSONObject(i);
+//                        String title = jObject.getString("title");
+//                        String content = jObject.getString("contents");
+//                        dbArticle.put(title, content);
+//                    }
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, 1000);
 
         final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, dbTitle);
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -101,7 +103,8 @@ public class SuccessActivity extends AppCompatActivity
                     String keyName = (String) iterator.next();
                     dbTitle.add(keyName);
                 }
-                mlist = (ListView)findViewById(R.id.success_list);
+//                mlist = (ListView)findViewById(R.id.success_list);
+//                mlist.setAdapter(adapter);
                 mlist.setAdapter(adapter);
                 mlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -114,15 +117,17 @@ public class SuccessActivity extends AppCompatActivity
                         finish();
                     }
                 });
-                hideProgressDialog();
+//        final ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, dbTitle);
+//        mlist.setAdapter(adapter);
+
+        hideProgressDialog();
             }
-        }, 2000);
+        }, 1000);
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout4);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -167,7 +172,7 @@ public class SuccessActivity extends AppCompatActivity
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_support) {
-            intent = new Intent(getApplicationContext(),SupportActivity.class);
+            intent = new Intent(getApplicationContext(),SupportActivity_Fix.class);
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_success) {
@@ -175,18 +180,18 @@ public class SuccessActivity extends AppCompatActivity
             startActivity(intent);
             finish();
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout4);
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout4);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    String loadHtml() {
+    public String loadHtml(final String url1) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 final StringBuffer sb = new StringBuffer();
                 try {
-                    URL url = new URL(urlStr1);
+                    URL url = new URL(url1);
                     HttpURLConnection conn =
                             (HttpURLConnection) url.openConnection();// 접속
                     if (conn != null) {
@@ -202,22 +207,28 @@ public class SuccessActivity extends AppCompatActivity
                                 if (line == null) break;
                                 sb.append(line + "\n");
                             }
+                            loadHtmlStr=sb.toString();
+                            JSONArray jArray = new JSONArray(loadHtmlStr);
+
+                            for (int i = 0; i < jArray.length(); i++) {
+                                JSONObject jObject = jArray.getJSONObject(i);
+                                String title = jObject.getString("title");
+                                String content = jObject.getString("contents");
+                                dbArticle.put(title, content);
+                            }
+
                             br.close(); // 스트림 해제
                         }
                         conn.disconnect(); // 연결 끊기
                     }
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadHtmlStr=sb.toString();
-                            Log.d("loadHtmlStr떴떴냐", loadHtmlStr);
-                        }
-                    });
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+
+        Log.i("loadHtmlStr떴떴냐", loadHtmlStr);
         t.start(); // 쓰레드 시작
         return loadHtmlStr;
     }
