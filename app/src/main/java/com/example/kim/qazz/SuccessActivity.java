@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,7 +25,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -119,24 +119,29 @@ public class SuccessActivity extends AppCompatActivity
         call.enqueue(new Callback<Repo>() {
             @Override
             public void onResponse(Call<Repo> call, Response<Repo> response) {
+                final Success_ListViewAdapter ladapter = new Success_ListViewAdapter();
                 if (response.isSuccessful()) {
                     Repo repo = response.body();
                     for(int i = 0; i<repo.getResult_data().size(); i++){
                         dbTitle.add(i, repo.getResult_data().get(i).getTitle());
+                        ladapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.village), repo.getResult_data().get(i).getTitle());
                         dbArticle.put(repo.getResult_data().get(i).getTitle(), repo.getResult_data().get(i).getContents());
                     }
-                    Log.i("dbTitle뜨긴떳니",""+dbTitle);
-                    final ArrayAdapter adapter =
-                            new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, dbTitle);
+//                    final ArrayAdapter adapter =
+//                            new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, dbTitle);
                     hideProgressDialog();
 
-                    mlist.setAdapter(adapter);
+//                    mlist.setAdapter(adapter);
+                    mlist.setAdapter(ladapter);
                     mlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String gt = (""+parent.getItemAtPosition(position));
                             Intent intent = new Intent(getBaseContext(), ArticleActivity.class);
-                            intent.putExtra("dbTitle",(String)parent.getItemAtPosition(position));
+//                            intent.putExtra("dbTitle", parent.getItemAtPosition(position).toString());
+                            HashMap<String, Object> obj = (HashMap<String, Object>) ladapter.getItem(position).;
+                            String name = (String)obj.get("mtext");
+                            intent.putExtra("dbTitle",name);
                             intent.putExtra("dbArticle",dbArticle);
                             startActivity(intent);
                             finish();
@@ -146,7 +151,7 @@ public class SuccessActivity extends AppCompatActivity
             }
             @Override
             public void onFailure(Call<Repo> call, Throwable t) {
-                Log.i("이게.. 아닌데..",""+call);
+
             }
         });
     }
@@ -225,13 +230,11 @@ public class SuccessActivity extends AppCompatActivity
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = ProgressDialog.show(SuccessActivity.this, "로딩중...", "잠시만 기다려주세요.");
-            Log.i("야야로딩시작한다","1");
         }
     }
     private void hideProgressDialog() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.hide();
-            Log.i("야야로딩끝났다","2");
         }
     }
 }
