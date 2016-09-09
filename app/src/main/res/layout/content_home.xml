@@ -84,5 +84,9 @@
             android:onClick="SuccessBT"
             android:background="#00ff0000" />
     </GridLayout>
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/wheat1"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

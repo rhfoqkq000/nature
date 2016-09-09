@@ -185,7 +185,7 @@ public class RegionActivity extends AppCompatActivity
                     mlist.setAdapter(madapter);
                     Log.i("두번째 execute list : ", "" + gPHP2.address);
                     for (int i = 0; i < gPHP2.address.size(); i++) {
-                        madapter.addItem(ContextCompat.getDrawable(RegionActivity.this, R.drawable.square), gPHP2.address.get(i));
+                        madapter.addItem(ContextCompat.getDrawable(RegionActivity.this, R.drawable.village), gPHP2.address.get(i));
                     }
                 }
             }, 200);
