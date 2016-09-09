@@ -1,4 +1,4 @@
-package com.example.kim.qazz.Retrofit;
+package com.example.kim.qazz.RetrofitHelpHouse;
 
 /**
  * Created by user on 2016-09-08.

@@ -69,4 +69,11 @@ public class Support_ListViewAdapter extends BaseAdapter {
 
         mlistData.add(addInfo);
     }
+
+    public void addItem2(String text){
+        Support_ListData addInfo = new Support_ListData();
+        addInfo.support_text = text;
+
+        mlistData.add(addInfo);
+    }
 }

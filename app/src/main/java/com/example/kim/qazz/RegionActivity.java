@@ -1,8 +1,11 @@
 package com.example.kim.qazz;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.BottomSheetBehavior;
@@ -14,18 +17,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -47,6 +56,9 @@ public class RegionActivity extends AppCompatActivity
     String text, text2, text3;
     Activity acti;
     int count = 0;
+    int mWidthPixels, mHeightPixels;
+    PopupWindow pwindo;
+    Button btnClosePopup;
     String[] listDo = {"강원도", "경기도", "경상남도", "경상북도", "광주광역시", "대구광역시",
             "대전광역시", "부산광역시", "서울특별시", "세종특별자치시", "울산광역시", "인천광역시",
             "전라남도", "전라북도", "제주특별자치도", "충청남도", "충청북도"};
@@ -77,6 +89,36 @@ public class RegionActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar_region);
         ButterKnife.bind(this);
+
+
+        WindowManager w = getWindowManager();
+        Display d = w.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        d.getMetrics(metrics);
+        // since SDK_INT = 1;
+        mWidthPixels = metrics.widthPixels;
+        mHeightPixels = metrics.heightPixels;
+
+        // 상태바와 메뉴바의 크기를 포함
+        if (Build.VERSION.SDK_INT >= 17)
+            try {
+                Point realSize = new Point();
+                Display.class.getMethod("getRealSize", Point.class).invoke(d, realSize);
+                mWidthPixels = realSize.x;
+                mHeightPixels = realSize.y;
+            } catch (Exception ignored) {
+            }
+
+        try{
+            mWidthPixels = (Integer) Display.class.getMethod("getRawWidth").invoke(d);
+            mHeightPixels = (Integer) Display.class.getMethod("getRawHeight").invoke(d);
+        }catch(Exception e){
+
+        }
+
+
+
+
 
         gPHP = new GettingPHP();
         acti = this;
@@ -234,6 +276,19 @@ public class RegionActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            LayoutInflater inflater = (LayoutInflater) RegionActivity.this
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.popup,
+                    (ViewGroup) findViewById(R.id.popup_element));
+            pwindo = new PopupWindow(layout, mWidthPixels-200, mHeightPixels-1000, true);
+            pwindo.showAtLocation(layout, Gravity.CENTER, 0, 0);
+            btnClosePopup = (Button) layout.findViewById(R.id.btn_close_popup);
+            btnClosePopup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pwindo.dismiss();
+                }
+            });
             return true;
         }
         return super.onOptionsItemSelected(item);

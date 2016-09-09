@@ -1,4 +1,4 @@
-package com.example.kim.qazz.Retrofit;
+package com.example.kim.qazz.RetrofitHelpHouse;
 
 import java.util.ArrayList;
 
