@@ -7,7 +7,6 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -37,14 +36,24 @@ import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.kim.qazz.RetrofitRegion.Region;
+import com.example.kim.qazz.RetrofitRegion.Repo;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 //dds
 public class RegionActivity extends AppCompatActivity
@@ -63,13 +72,6 @@ public class RegionActivity extends AppCompatActivity
             "대전광역시", "부산광역시", "서울특별시", "세종특별자치시", "울산광역시", "인천광역시",
             "전라남도", "전라북도", "제주특별자치도", "충청남도", "충청북도"};
 
-    //데이터를 받아올 PHP 주소
-    String url = "http://returntocs.xyz/town/";
-    static ArrayList<String> address = new ArrayList<>();
-
-    // PHP를 읽어올때 사용할 변수
-    public GettingPHP gPHP;
-    public GettingPHP2 gPHP2;
     private GoogleApiClient client;
 
 //    @BindView(R.id.txtView) TextView tv;
@@ -90,6 +92,8 @@ public class RegionActivity extends AppCompatActivity
         setContentView(R.layout.app_bar_region);
         ButterKnife.bind(this);
 
+        final ArrayList<String> address = new ArrayList<>();
+        final ArrayList address_result = new ArrayList();
 
         WindowManager w = getWindowManager();
         Display d = w.getDefaultDisplay();
@@ -116,11 +120,6 @@ public class RegionActivity extends AppCompatActivity
 
         }
 
-
-
-
-
-        gPHP = new GettingPHP();
         acti = this;
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         setSupportActionBar(toolbar);
@@ -141,48 +140,82 @@ public class RegionActivity extends AppCompatActivity
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                count++;
-                if (count > 1) {
-                    gPHP = null;
-                    gPHP = new GettingPHP();
-                    count--;
-                }
-                url = "http://returntocs.xyz/town/";
                 text = spinnerdo.getSelectedItem().toString();
-                Log.i("text 2", text);
-                gPHP.execute(url + text);
+                Log.i("행정구역 text : ", text);
 
-                Handler handler = new Handler();
-                new Handler().postDelayed(new Runnable() {// 1 초 후에 실행
+                Retrofit client = new Retrofit.Builder().baseUrl("http://45.32.61.201:3000/nature/")
+                        .addConverterFactory(GsonConverterFactory.create()).build();
+
+                Region region_service = client.create(Region.class);
+
+                Call<Repo> region_call = region_service.repo(String.valueOf(text));
+
+                region_call.enqueue(new Callback<Repo>() {
                     @Override
-                    public void run() {
-                        if (gPHP.result_List.size() == 0) {
-                            gPHP.result_List.add(0, "------");
+                    public void onResponse(Call<Repo> call, Response<Repo> response) {
+                        if (response.isSuccessful()) {
+                            Repo repo = response.body();
+                            address.clear();
+                            address_result.clear();
+                            if (repo.getResult_data_maeul().size() == 0) {
+                                address.add(0, "--------");
+                            } else {
+                                for (int i = 0; i < repo.getResult_data_maeul().size(); i++) {
+                                    String address_split = repo.getResult_data_maeul().get(i).getAddress();
+                                    address_split = address_split.split(" ")[1];
+                                    address.add(i, address_split);
+                                }
+                            }
+
+                            HashSet hs = new HashSet(address);
+                            Iterator it = hs.iterator();
+                            while (it.hasNext()) {
+                                address_result.add(it.next());
+                            }
+                            Collections.sort(address_result, String.CASE_INSENSITIVE_ORDER);
+                            Log.e("address_result", "" + address_result);
+
+                            ArrayAdapter<String> ladapter2 = new ArrayAdapter<String>(
+                                    acti, android.R.layout.simple_spinner_item, address_result);
+                            ladapter2.setDropDownViewResource(
+                                    android.R.layout.simple_spinner_dropdown_item);
+                            Log.i("시/군", "" + address_result);
+
+                            spinnersi.setAdapter(ladapter2);
+
+                            spinnersi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                                    text2 = spinnersi.getSelectedItem().toString();
+                                    Log.i("스피너2", text2);
+                                }
+
+                                public void onNothingSelected(AdapterView parent) {
+                                    // Do nothing.
+                                }
+                            });
+
+                        } else {
+                            Log.e("실패?ㅠㅠ", "" + text);
                         }
-                        ArrayAdapter<String> ladapter2 = new ArrayAdapter<String>(
-                                acti, android.R.layout.simple_spinner_item, gPHP.result_List);
-                        ladapter2.setDropDownViewResource(
-                                android.R.layout.simple_spinner_dropdown_item);
-                        Log.i("시/군", "" + gPHP.result_List);
-                        spinnersi.setAdapter(ladapter2);
-                    }
-                }, 600);
 
-                spinnersi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                        text2 = spinnersi.getSelectedItem().toString();
-                        Log.i("스피너2", text2);
                     }
-                    public void onNothingSelected(AdapterView parent) {
-                        // Do nothing.
+
+                    @Override
+                    public void onFailure(Call<Repo> call, Throwable t) {
+
                     }
                 });
+
+
             }
-            public void onNothingSelected(AdapterView parent) {
-                // Do nothing.
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
+
 
         //region_Bottom
 //        bottom = (GridLayout) findViewById(R.id.bottom);
@@ -203,7 +236,15 @@ public class RegionActivity extends AppCompatActivity
     }
 
     public void onButtonClick(View view) {
-        if (text2 == "------") {
+        final ArrayList<String> townName = new ArrayList<>();
+        final ArrayList<String> address2 = new ArrayList<>();
+        final ArrayList<String> townFact = new ArrayList<>();
+        final ArrayList<String> townGood = new ArrayList<>();
+        final ArrayList<String> townBad = new ArrayList<>();
+        final ArrayList<Double> latitude = new ArrayList<>();
+        final ArrayList<Double> longitude = new ArrayList<>();
+
+        if (text2 == "--------") {
             Toast.makeText(getApplicationContext(), "다른 시/도를 선택해주세요!", Toast.LENGTH_LONG).show();
         } else {
             text3 = text + " " + text2;
@@ -212,40 +253,64 @@ public class RegionActivity extends AppCompatActivity
             behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
             //List 부분
-            gPHP2 = new GettingPHP2();
-            gPHP2.execute(url + text3);
+            Retrofit client2 = new Retrofit.Builder().baseUrl("http://45.32.61.201:3000/nature/")
+                    .addConverterFactory(GsonConverterFactory.create()).build();
 
-            madapter = new Region_ListViewAdapter();
-            mlist = (ListView) findViewById(R.id.region_list);
+            Region region_service2 = client2.create(Region.class);
 
+            Call<Repo> region_call2 = region_service2.repo(String.valueOf(text3));
 
-            Handler handler = new Handler();
-            new Handler().postDelayed(new Runnable() {// 1 초 후에 실행
-
+            region_call2.enqueue(new Callback<Repo>() {
                 @Override
-                public void run() {
-                    mlist.setAdapter(madapter);
-                    Log.i("두번째 execute list : ", "" + gPHP2.address);
-                    for (int i = 0; i < gPHP2.address.size(); i++) {
-                        madapter.addItem(ContextCompat.getDrawable(RegionActivity.this, R.drawable.square), gPHP2.address.get(i));
+                public void onResponse(Call<Repo> call, Response<Repo> response) {
+                    if (response.isSuccessful()) {
+                        Repo repo = response.body();
+                        townName.clear();
+                        for (int i = 0; i < repo.getResult_data_maeul().size(); i++) {
+                            townName.add(i, repo.getResult_data_maeul().get(i).getTownName());
+                            address2.add(i, repo.getResult_data_maeul().get(i).getAddress());
+                            townFact.add(i, repo.getResult_data_maeul().get(i).getTownFact());
+                            townGood.add(i, repo.getResult_data_maeul().get(i).getTownGood());
+                            townBad.add(i, repo.getResult_data_maeul().get(i).getTownBad());
+                            latitude.add(i, repo.getResult_data_maeul().get(i).getLatitude());
+                            longitude.add(i, repo.getResult_data_maeul().get(i).getLongitude());
+                        }
+
+                        madapter = new Region_ListViewAdapter();
+                        mlist = (ListView) findViewById(R.id.region_list);
+
+                        mlist.setAdapter(madapter);
+                        Log.i("list 목록 : ", "" + townName);
+                        for (int i = 0; i < townName.size(); i++) {
+                            madapter.addItem(ContextCompat.getDrawable(RegionActivity.this, R.drawable.home), townName.get(i));
+                        }
+
+                    } else {
                     }
                 }
-            }, 200);
+
+                @Override
+                public void onFailure(Call<Repo> call, Throwable t) {
+
+                }
+
+            });
 
             mlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     ListData mData = madapter.mlistData.get(i);
                     Toast.makeText(RegionActivity.this, mData.mtext, Toast.LENGTH_SHORT).show();
-                    Log.i("위도", "" + gPHP2.latitude.get(i));
-                    Log.i("경도", "" + gPHP2.longitude.get(i));
+                    Log.i("위도", "" + latitude.get(i));
+                    Log.i("경도", "" + longitude.get(i));
                     Intent myIntent = new Intent(getApplicationContext(), RegionNewActivity.class);
-                    myIntent.putExtra("lat", gPHP2.latitude.get(i));
-                    myIntent.putExtra("long", gPHP2.longitude.get(i));
-                    myIntent.putExtra("fact", gPHP2.townFact.get(i));
-                    myIntent.putExtra("name", gPHP2.townName.get(i));
-                    myIntent.putExtra("good", gPHP2.townGood.get(i));
-                    myIntent.putExtra("bad", gPHP2.townBad.get(i));
+                    myIntent.putExtra("lat", latitude.get(i));
+                    myIntent.putExtra("long", longitude.get(i));
+                    myIntent.putExtra("add", address2.get(i));
+                    myIntent.putExtra("fact", townFact.get(i));
+                    myIntent.putExtra("name", townName.get(i));
+                    myIntent.putExtra("good", townGood.get(i));
+                    myIntent.putExtra("bad", townBad.get(i));
                     startActivity(myIntent);
                 }
             });

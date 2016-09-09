@@ -15,7 +15,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -139,7 +138,7 @@ public class SuccessActivity extends AppCompatActivity
                             String gt = (""+parent.getItemAtPosition(position));
                             Intent intent = new Intent(getBaseContext(), ArticleActivity.class);
 //                            intent.putExtra("dbTitle", parent.getItemAtPosition(position).toString());
-                            HashMap<String, Object> obj = (HashMap<String, Object>) ladapter.getItem(position).;
+                            HashMap<String, Object> obj = (HashMap<String, Object>) ladapter.getItem(position);
                             String name = (String)obj.get("mtext");
                             intent.putExtra("dbTitle",name);
                             intent.putExtra("dbArticle",dbArticle);
