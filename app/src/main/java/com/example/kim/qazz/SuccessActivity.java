@@ -1,39 +1,47 @@
 package com.example.kim.qazz;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 
-import com.google.android.gms.appindexing.AppIndex;
+import com.example.kim.qazz.RetrofitSuccess.Repo;
+import com.example.kim.qazz.RetrofitSuccess.Success;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class SuccessActivity extends AppCompatActivity
@@ -45,6 +53,10 @@ public class SuccessActivity extends AppCompatActivity
     String urlStr1, loadHtmlStr = "";
     ArrayList<String> dbTitle = new ArrayList<String>();
     ProgressDialog mProgressDialog;
+    Context mContext;
+    int mWidthPixels, mHeightPixels;
+    PopupWindow pwindo;
+    Button btnClosePopup;
 
     @BindView(R.id.toolbar4) Toolbar toolbar;
     @BindView(R.id.drawer_layout4) DrawerLayout drawer;
@@ -58,46 +70,89 @@ public class SuccessActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-
+        mContext = this;
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+
+        WindowManager w = getWindowManager();
+        Display d = w.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        d.getMetrics(metrics);
+        // since SDK_INT = 1;
+        mWidthPixels = metrics.widthPixels;
+        mHeightPixels = metrics.heightPixels;
+
+        // 상태바와 메뉴바의 크기를 포함
+        if (Build.VERSION.SDK_INT >= 17)
+            try {
+                Point realSize = new Point();
+                Display.class.getMethod("getRealSize", Point.class).invoke(d, realSize);
+                mWidthPixels = realSize.x;
+                mHeightPixels = realSize.y;
+            } catch (Exception ignored) {
+            }
+
+        try{
+            mWidthPixels = (Integer) Display.class.getMethod("getRawWidth").invoke(d);
+            mHeightPixels = (Integer) Display.class.getMethod("getRawHeight").invoke(d);
+        }catch(Exception e){
+
+        }
+
+
+
         navigationView.setNavigationItemSelectedListener(this);
 
         showProgressDialog();
 
-        urlStr1 = "http://returntocs.xyz/suex";
-        loadHtml(urlStr1);
+        urlStr1 = "http://45.32.61.201:3000/nature/";
+//        loadHtml(urlStr1);
+        Retrofit client = new Retrofit.Builder().baseUrl(urlStr1)
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        Success success = client.create(Success.class);
+        final Call<Repo> call = success.repo();
 
-        final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, dbTitle);
-        new Handler().postDelayed(new Runnable() {
+        call.enqueue(new Callback<Repo>() {
             @Override
-            public void run() {
-                Set key = dbArticle.keySet();
-                for (Iterator iterator = key.iterator(); iterator.hasNext();) {
-                    String keyName = (String) iterator.next();
-                    dbTitle.add(keyName);
-                }
-//                mlist = (ListView)findViewById(R.id.success_list);
-//                mlist.setAdapter(adapter);
-                mlist.setAdapter(adapter);
-                mlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String gt = (""+parent.getItemAtPosition(position));
-                        Intent intent = new Intent(getBaseContext(), ArticleActivity.class);
-                        intent.putExtra("dbTitle",(String)parent.getItemAtPosition(position));
-                        intent.putExtra("dbArticle",dbArticle);
-                        startActivity(intent);
-                        finish();
+            public void onResponse(Call<Repo> call, Response<Repo> response) {
+                final Success_ListViewAdapter ladapter = new Success_ListViewAdapter();
+                if (response.isSuccessful()) {
+                    Repo repo = response.body();
+                    for(int i = 0; i<repo.getResult_data().size(); i++){
+                        dbTitle.add(i, repo.getResult_data().get(i).getTitle());
+                        ladapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.village), repo.getResult_data().get(i).getTitle());
+                        dbArticle.put(repo.getResult_data().get(i).getTitle(), repo.getResult_data().get(i).getContents());
                     }
-                });
-        hideProgressDialog();
+//                    final ArrayAdapter adapter =
+//                            new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, dbTitle);
+                    hideProgressDialog();
+
+//                    mlist.setAdapter(adapter);
+                    mlist.setAdapter(ladapter);
+                    mlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            String gt = (""+parent.getItemAtPosition(position));
+                            Intent intent = new Intent(getBaseContext(), ArticleActivity.class);
+//                            intent.putExtra("dbTitle", parent.getItemAtPosition(position).toString());
+                            HashMap<String, Object> obj = (HashMap<String, Object>) ladapter.getItem(position);
+                            String name = (String)obj.get("mtext");
+                            intent.putExtra("dbTitle",name);
+                            intent.putExtra("dbArticle",dbArticle);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
             }
-        }, 1000);
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+            @Override
+            public void onFailure(Call<Repo> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
@@ -123,6 +178,19 @@ public class SuccessActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            LayoutInflater inflater = (LayoutInflater) SuccessActivity.this
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.popup,
+                    (ViewGroup) findViewById(R.id.popup_element));
+            pwindo = new PopupWindow(layout, mWidthPixels-200, mHeightPixels-1000, true);
+            pwindo.showAtLocation(layout, Gravity.CENTER, 0, 0);
+            btnClosePopup = (Button) layout.findViewById(R.id.btn_close_popup);
+            btnClosePopup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pwindo.dismiss();
+                }
+            });
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -156,52 +224,6 @@ public class SuccessActivity extends AppCompatActivity
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    public String loadHtml(final String url1) {
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final StringBuffer sb = new StringBuffer();
-                try {
-                    URL url = new URL(url1);
-                    HttpURLConnection conn =
-                            (HttpURLConnection) url.openConnection();// 접속
-                    if (conn != null) {
-                        conn.setConnectTimeout(2000);
-                        conn.setUseCaches(false);
-                        if (conn.getResponseCode()
-                                == HttpURLConnection.HTTP_OK) {
-                            BufferedReader br
-                                    = new BufferedReader(new InputStreamReader
-                                    (conn.getInputStream(), "utf-8"));//"utf-8"
-                            while (true) {
-                                String line = br.readLine();
-                                if (line == null) break;
-                                sb.append(line + "\n");
-                            }
-                            loadHtmlStr=sb.toString();
-                            JSONArray jArray = new JSONArray(loadHtmlStr);
-
-                            for (int i = 0; i < jArray.length(); i++) {
-                                JSONObject jObject = jArray.getJSONObject(i);
-                                String title = jObject.getString("title");
-                                String content = jObject.getString("contents");
-                                dbArticle.put(title, content);
-                            }
-
-                            br.close(); // 스트림 해제
-                        }
-                        conn.disconnect(); // 연결 끊기
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        t.start(); // 쓰레드 시작
-        return loadHtmlStr;
     }
 
     private void showProgressDialog() {

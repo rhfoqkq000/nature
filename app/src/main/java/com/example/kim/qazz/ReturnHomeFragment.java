@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.kim.qazz.Retrofit.HelpHouse;
-import com.example.kim.qazz.Retrofit.Repo;
+import com.example.kim.qazz.RetrofitHelpHouse.HelpHouse;
+import com.example.kim.qazz.RetrofitHelpHouse.Repo;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ public class ReturnHomeFragment extends Fragment {
     View mv;
     Button btnSend2;
     TextView houseText;
+    ListView slist;
+    Support_ListViewAdapter sAdapter = new Support_ListViewAdapter();
 
     public ReturnHomeFragment() {
     }
@@ -57,6 +61,8 @@ public class ReturnHomeFragment extends Fragment {
         View rootview = inflater.inflate(R.layout.content_house, container, false);
 
         houseText = (TextView) rootview.findViewById(R.id.HouseText);
+        slist = (ListView)rootview.findViewById(R.id.slist);
+
         sido_cd = new ArrayList<String>();
         sido_cd.add("강원도");
         sido_cd.add("경상남도");
@@ -203,7 +209,8 @@ public class ReturnHomeFragment extends Fragment {
                     public void onResponse(Call<Repo> call, Response<Repo> response) {
                         if (response.isSuccessful()) {
                             Repo repo = response.body();
-                            StringBuilder sb = new StringBuilder();
+//                            StringBuilder sb = new StringBuilder();
+                            ArrayList<String> arar = new ArrayList<String>();
                             for(int i = 0; i<repo.getResult_data().size(); i++){
                                 String tel = "";
                                 if(repo.getResult_data().get(i).getTel()==null){
@@ -211,15 +218,34 @@ public class ReturnHomeFragment extends Fragment {
                                 }else{
                                     tel = repo.getResult_data().get(i).getTel();
                                 }
-                                sb.append("시도 : "+repo.getResult_data().get(i).getSido()
-                                        +"\n시군 : "+repo.getResult_data().get(i).getSigun()
-                                        +"\n이름 : "+repo.getResult_data().get(i).getName()
-                                        +"\n요금 : "+repo.getResult_data().get(i).getFee()
-                                        +"\n기간 : "+repo.getResult_data().get(i).getPeriod()
-                                        +"\n전화번호 : "+tel+"\n\n");
-                            }
+//                                arar.add(i, "시도 : "+repo.getResult_data().get(i).getSido()
+//                                        +"\n시군 : "+repo.getResult_data().get(i).getSigun()
+//                                        +"\n이름 : "+repo.getResult_data().get(i).getName()
+//                                        +"\n요금 : "+repo.getResult_data().get(i).getFee()
+//                                        +"\n기간 : "+repo.getResult_data().get(i).getPeriod()
+//                                        +"\n전화번호 : "+tel);
+                                arar.add("시도 : "+repo.getResult_data().get(i).getSido());
+                                arar.add("시군 : "+repo.getResult_data().get(i).getSigun());
+                                arar.add("이름 : "+repo.getResult_data().get(i).getName());
+                                arar.add("요금 : "+repo.getResult_data().get(i).getFee());
+                                arar.add("기간 : "+repo.getResult_data().get(i).getPeriod());
+                                arar.add("전화번호 : "+tel);
+                                arar.add("");
 
-                            houseText.setText(sb);
+                            }
+                            Support_ListViewAdapter sAdapter = new Support_ListViewAdapter();
+                            for(int i = 0; i<arar.size(); i++){
+                                if(arar.get(i).equals("")){
+                                    sAdapter.addItem2(arar.get(i));
+                                }else{
+                                    if(arar.get(i).substring(0, 2).equals("시도")){
+                                        sAdapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.square), arar.get(i));
+                                    }else{
+                                        sAdapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.abcd), arar.get(i));
+                                    }
+                                }
+                            }
+                            slist.setAdapter(sAdapter);
                         }
                     }
 

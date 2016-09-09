@@ -3,6 +3,8 @@ package com.example.kim.qazz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -11,6 +13,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ArticleActivity extends AppCompatActivity {
+    int mWidthPixels, mHeightPixels;
+    PopupWindow pwindo;
+    Button btnClosePopup;
 
     @BindView(R.id.tvTitle) TextView tvTitle;
     @BindView(R.id.tvDetail) TextView tvDetail;
