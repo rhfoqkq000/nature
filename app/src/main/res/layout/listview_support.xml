@@ -9,7 +9,8 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/mimage"
+        android:id="@+id/image_support"
+        android:src="@drawable/square"
         android:layout_margin="16dp"/>
 
     <LinearLayout
@@ -21,7 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/mtext"
+            android:id="@+id/text_support"
             android:text="Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>

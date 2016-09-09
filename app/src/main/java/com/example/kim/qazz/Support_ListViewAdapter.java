@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class Support_ListViewAdapter extends BaseAdapter {
 
-    public ArrayList<ListData> mlistData = new ArrayList<ListData>();
+    public ArrayList<Support_ListData> mlistData = new ArrayList<Support_ListData>();
 
     public Support_ListViewAdapter(){
     }
@@ -48,13 +48,13 @@ public class Support_ListViewAdapter extends BaseAdapter {
 
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.listview, parent, false);
+            convertView = inflater.inflate(R.layout.listview_support, parent, false);
         }
 
-        ImageView iconImageView = (ImageView)convertView.findViewById(R.id.mimage);
-        TextView textView = (TextView)convertView.findViewById(R.id.mtext);
+        ImageView iconImageView = (ImageView)convertView.findViewById(R.id.image_support);
+        TextView textView = (TextView)convertView.findViewById(R.id.text_support);
 
-        ListData listData = mlistData.get(position);
+        Support_ListData listData = mlistData.get(position);
 
         iconImageView.setImageDrawable(listData.getIcon());
         textView.setText(listData.getText());
@@ -63,9 +63,9 @@ public class Support_ListViewAdapter extends BaseAdapter {
     }
 
     public void addItem(Drawable icon, String text){
-        ListData addInfo = new ListData();
-        addInfo.micon = icon;
-        addInfo.mtext = text;
+        Support_ListData addInfo = new Support_ListData();
+        addInfo.support_icon = icon;
+        addInfo.support_text = text;
 
         mlistData.add(addInfo);
     }

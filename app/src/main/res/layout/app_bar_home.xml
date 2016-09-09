@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="#FFFFFF"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/PopupMenuStyle" />
         <View
             android:layout_width="match_parent"
             android:layout_height="1.5dp"
