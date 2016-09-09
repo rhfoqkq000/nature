@@ -19,12 +19,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
-<<<<<<< HEAD
  * Created by kim on 16. 8. 8.
  */
 public class RegionNewActivity extends AppCompatActivity implements OnMapReadyCallback {
     Double latitude;
     Double longitude;
+    String address;
     String townName;
     String townFact;
     String townGood;
@@ -55,23 +55,23 @@ public class RegionNewActivity extends AppCompatActivity implements OnMapReadyCa
         ButterKnife.bind(this);
 
         Intent myintent = getIntent();
-        latitude = myintent.getDoubleExtra("lat", 37.6);
+        latitude = myintent.getDoubleExtra("lat", 37.0);
         longitude = myintent.getDoubleExtra("long", 127.0);
+        address = myintent.getStringExtra("add");
         townName = myintent.getStringExtra("name");
         townFact = myintent.getStringExtra("fact");
         townGood = myintent.getStringExtra("good");
         townBad = myintent.getStringExtra("bad");
-        if(townGood.equals("NULL")){
-            townGood = "정보없음";
-        }
-        if(townBad.equals("NULL")){
-            townBad = "정보없음";
-        }
-
+//        if(townGood.equals(null)){
+//            townGood = "정보없음";
+//        }
+//        if(townBad.equals("")){
+//            townBad = "정보없음";
+//        }
         townFact = townFact.substring(1,townFact.length()-1);
         Log.i("위도/경도/마을이름/시설/굿/뱃", latitude +" , " + longitude + " , " + townName + " , "
                 + townFact + " , " + townGood + " , " + townBad);
-        tv.append("마을이름  :  "+townName+"\n\n"+"마을시설  :  "+townFact+"\n\n"+"Good  :  "+townGood+"\n\n"+"Bad  :  "+townBad+"\n");
+        tv.append("마을이름  :  "+townName+"\n\n"+"주소  :  "+address+"\n\n"+"마을시설  :  "+townFact+"\n\n"+"Good  :  "+townGood+"\n\n"+"Bad  :  "+townBad+"\n");
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
