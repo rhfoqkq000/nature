@@ -47,7 +47,7 @@ public class GettingPHP extends AsyncTask<String, String, String> {
                         jsonHtml.append(line + "\n");
                     }
 
-                    Log.i("jsonHtml.toString()가져와2", jsonHtml.toString());
+//                    Log.i("jsonHtml.toString()가져와2", jsonHtml.toString());
                     br.close();
                 }
                 conn.disconnect(); //메모리누수방지
@@ -87,7 +87,7 @@ public class GettingPHP extends AsyncTask<String, String, String> {
                 result_List.add(it.next());
             }
             Collections.sort(result_List, String.CASE_INSENSITIVE_ORDER);
-            Log.i("excute 끝났다", "" + result_List);
+//            Log.i("excute 끝났다", "" + result_List);
 //                String zzzz= "" + second2;
 //                String zzz= "" + add;
 //                String zz = "" + address;

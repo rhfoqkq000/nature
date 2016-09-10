@@ -18,8 +18,19 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
+    // 요기랑
+    signingConfigs {
+        release {
+            storeFile file("signature/release.jks")
+            storePassword "chldbwjd"
+            keyAlias "keystore"
+            keyPassword "chldbwjd"
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.release    // 여기
+            debuggable false // debugging 허용 안함
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -47,4 +58,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
     compile 'com.google.android.gms:play-services:8.4.0'
+
+    compile 'gun0912.ted:tedpermission:1.0.0'
 }

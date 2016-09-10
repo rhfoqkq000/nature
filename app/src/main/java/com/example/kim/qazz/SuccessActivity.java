@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -123,24 +123,24 @@ public class SuccessActivity extends AppCompatActivity
                     Repo repo = response.body();
                     for(int i = 0; i<repo.getResult_data().size(); i++){
                         dbTitle.add(i, repo.getResult_data().get(i).getTitle());
-                        ladapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.village), repo.getResult_data().get(i).getTitle());
+//                        ladapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.village), repo.getResult_data().get(i).getTitle());
                         dbArticle.put(repo.getResult_data().get(i).getTitle(), repo.getResult_data().get(i).getContents());
                     }
-//                    final ArrayAdapter adapter =
-//                            new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, dbTitle);
+                    final ArrayAdapter adapter =
+                            new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, dbTitle);
                     hideProgressDialog();
 
-//                    mlist.setAdapter(adapter);
-                    mlist.setAdapter(ladapter);
+                    mlist.setAdapter(adapter);
+//                    mlist.setAdapter(ladapter);
                     mlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String gt = (""+parent.getItemAtPosition(position));
                             Intent intent = new Intent(getBaseContext(), ArticleActivity.class);
-//                            intent.putExtra("dbTitle", parent.getItemAtPosition(position).toString());
-                            HashMap<String, Object> obj = (HashMap<String, Object>) ladapter.getItem(position);
-                            String name = (String)obj.get("mtext");
-                            intent.putExtra("dbTitle",name);
+                            intent.putExtra("dbTitle", (String)parent.getItemAtPosition(position));
+//                            HashMap<String, Object> obj = (HashMap<String, Object>) ladapter.getItem(position);
+//                            String name = (String)obj.get("mtext");
+//                            intent.putExtra("dbTitle",name);
                             intent.putExtra("dbArticle",dbArticle);
                             startActivity(intent);
                             finish();

@@ -59,7 +59,6 @@ public class ReturnCenterFragment extends Fragment {
         hash.put("경기도", "6410000");
         hash.put("경상남도", "6480000");
         hash.put("경상북도", "6470000");
-        hash.put("서울특별시", "6110000");
         hash.put("전라남도", "6460000");
         hash.put("전라북도", "6450000");
         hash.put("충청남도", "6440000");

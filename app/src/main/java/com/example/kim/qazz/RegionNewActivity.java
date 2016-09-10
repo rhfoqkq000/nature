@@ -7,6 +7,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -44,8 +45,10 @@ public class RegionNewActivity extends AppCompatActivity implements OnMapReadyCa
 
         Marker seoul = googleMap.addMarker(new MarkerOptions().position(city)
                 .title("Seoul"));
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(city, 15));
+//        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(city, 15));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
     }
 
     @Override
@@ -68,10 +71,25 @@ public class RegionNewActivity extends AppCompatActivity implements OnMapReadyCa
 //        if(townBad.equals("")){
 //            townBad = "정보없음";
 //        }
-        townFact = townFact.substring(1,townFact.length()-1);
-        Log.i("위도/경도/마을이름/시설/굿/뱃", latitude +" , " + longitude + " , " + townName + " , "
-                + townFact + " , " + townGood + " , " + townBad);
-        tv.append("마을이름  :  "+townName+"\n\n"+"주소  :  "+address+"\n\n"+"마을시설  :  "+townFact+"\n\n"+"Good  :  "+townGood+"\n\n"+"Bad  :  "+townBad+"\n");
+        if(townFact.substring(1,townFact.length()-1).equals("null")){
+            townFact = "해당 자료 없음";
+        }else{
+            townFact = townFact.substring(1,townFact.length()-1);
+        }
+        try{
+            Log.i("goodbad", townBad+","+townGood);
+            if(townGood==null&&townBad==null){
+                tv.append("마을이름  :  "+townName+"\n\n"+"주소  :  "+address+"\n\n"+"마을시설  :  "+townFact+"\n\n");
+            }else if(townBad==null&&townGood!=null){
+                tv.append("마을이름  :  "+townName+"\n\n"+"주소  :  "+address+"\n\n"+"마을시설  :  "+townFact+"\n\n선호시설  :  "+townGood);
+            }else if(townGood==null&&townBad!=null){
+                tv.append("마을이름  :  "+townName+"\n\n"+"주소  :  "+address+"\n\n"+"마을시설  :  "+townFact+"\n\n위해시설  :  "+townBad);
+            }else{
+                tv.append("마을이름  :  "+townName+"\n\n"+"주소  :  "+address+"\n\n"+"마을시설  :  "+townFact+"\n\n"+"선호시설  :  "+townGood+"\n\n"+"위해시설  :  "+townBad+"\n");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);

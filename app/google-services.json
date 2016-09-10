@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "160061975945",
+    "project_id": "nature-143006"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160061975945:android:5a2a646940af0335",
+        "android_client_info": {
+          "package_name": "com.example.kim.qazz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160061975945-i9ba9d4ontcuvjln0rq848br7o801ot2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kim.qazz",
+            "certificate_hash": "8EFB0E6C1FCF706BB9EB00625009266CA6D16140"
+          }
+        },
+        {
+          "client_id": "160061975945-p1s910m1mt76srgsgk37b3fc7p5fjeg5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAuDOblEEqn2yF-zZiTMoUdM6BmARp26M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

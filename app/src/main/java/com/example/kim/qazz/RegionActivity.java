@@ -134,14 +134,14 @@ public class RegionActivity extends AppCompatActivity
                 android.R.layout.simple_spinner_dropdown_item);
         spinnerdo.setAdapter(ladapter);
         text = spinnerdo.getSelectedItem().toString();
-        Log.i("행정구역 text : ", text);
+//        Log.i("행정구역 text : ", text);
 
         spinnerdo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 text = spinnerdo.getSelectedItem().toString();
-                Log.i("행정구역 text : ", text);
+//                Log.i("행정구역 text : ", text);
 
                 Retrofit client = new Retrofit.Builder().baseUrl("http://45.32.61.201:3000/nature/")
                         .addConverterFactory(GsonConverterFactory.create()).build();
@@ -173,13 +173,13 @@ public class RegionActivity extends AppCompatActivity
                                 address_result.add(it.next());
                             }
                             Collections.sort(address_result, String.CASE_INSENSITIVE_ORDER);
-                            Log.e("address_result", "" + address_result);
+//                            Log.e("address_result", "" + address_result);
 
                             ArrayAdapter<String> ladapter2 = new ArrayAdapter<String>(
                                     acti, android.R.layout.simple_spinner_item, address_result);
                             ladapter2.setDropDownViewResource(
                                     android.R.layout.simple_spinner_dropdown_item);
-                            Log.i("시/군", "" + address_result);
+//                            Log.i("시/군", "" + address_result);
 
                             spinnersi.setAdapter(ladapter2);
 
@@ -187,7 +187,7 @@ public class RegionActivity extends AppCompatActivity
                                 @Override
                                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                                     text2 = spinnersi.getSelectedItem().toString();
-                                    Log.i("스피너2", text2);
+//                                    Log.i("스피너2", text2);
                                 }
 
                                 public void onNothingSelected(AdapterView parent) {
@@ -196,7 +196,7 @@ public class RegionActivity extends AppCompatActivity
                             });
 
                         } else {
-                            Log.e("실패?ㅠㅠ", "" + text);
+//                            Log.e("실패?ㅠㅠ", "" + text);
                         }
 
                     }
@@ -248,8 +248,8 @@ public class RegionActivity extends AppCompatActivity
             Toast.makeText(getApplicationContext(), "다른 시/도를 선택해주세요!", Toast.LENGTH_LONG).show();
         } else {
             text3 = text + " " + text2;
-            Log.i("합친 주소 보내기 : ", text3);
-            Toast.makeText(getApplicationContext(), text3 + " 을(를) 검색합니다.", Toast.LENGTH_LONG).show();
+//            Log.i("합친 주소 보내기 : ", text3);
+//            Toast.makeText(getApplicationContext(), text3 + " 을(를) 검색합니다.", Toast.LENGTH_LONG).show();
             behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
             //List 부분
@@ -282,10 +282,11 @@ public class RegionActivity extends AppCompatActivity
                         mlist.setAdapter(madapter);
                         Log.i("list 목록 : ", "" + townName);
                         for (int i = 0; i < townName.size(); i++) {
-                            madapter.addItem(ContextCompat.getDrawable(RegionActivity.this, R.drawable.home), townName.get(i));
+                            madapter.addItem(ContextCompat.getDrawable(RegionActivity.this, R.drawable.side), townName.get(i));
                         }
 
                     } else {
+
                     }
                 }
 
@@ -300,9 +301,9 @@ public class RegionActivity extends AppCompatActivity
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     ListData mData = madapter.mlistData.get(i);
-                    Toast.makeText(RegionActivity.this, mData.mtext, Toast.LENGTH_SHORT).show();
-                    Log.i("위도", "" + latitude.get(i));
-                    Log.i("경도", "" + longitude.get(i));
+//                    Toast.makeText(RegionActivity.this, mData.mtext, Toast.LENGTH_SHORT).show();
+//                    Log.i("위도", "" + latitude.get(i));
+//                    Log.i("경도", "" + longitude.get(i));
                     Intent myIntent = new Intent(getApplicationContext(), RegionNewActivity.class);
                     myIntent.putExtra("lat", latitude.get(i));
                     myIntent.putExtra("long", longitude.get(i));

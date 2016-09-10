@@ -1,9 +1,10 @@
 package com.example.kim.qazz;
 import android.os.AsyncTask;
-import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -91,7 +92,7 @@ public class GettingPHP2 extends AsyncTask<String, String, String> {
 //                    Log.i("테스트 세번째", "First : " + first + " / Second : " + second);
                 }
                 Collections.sort(address, String.CASE_INSENSITIVE_ORDER);
-            Log.i("두번째 excute 끝났다", "" + address);
+//            Log.i("두번째 excute 끝났다", "" + address);
 //                String zzzz= "" + second2;
 //                String zzz= "" + add;
 //                String zz = "" + address;
