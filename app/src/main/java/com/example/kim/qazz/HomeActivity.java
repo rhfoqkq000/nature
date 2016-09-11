@@ -106,7 +106,7 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 i++;
-                if(i>5){
+                if(i>4){
                     Toast.makeText(getApplicationContext(), "유정쨩카와이이이이이이익", Toast.LENGTH_SHORT).show();
                     i = 0;
                 }
@@ -231,4 +231,5 @@ public class HomeActivity extends AppCompatActivity
         startActivity(intent);
         finish();
     }
+
 }

@@ -21,7 +21,7 @@
         android:required="true" />
 
     <application
-        android:name="android.support.multidex.MultiDexApplication"
+        android:name=".CrashApplication"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="살어리랏다"
@@ -72,6 +72,12 @@
         <activity android:name=".ArticleActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity android:name="org.acra.CrashReportDialog"
+            android:theme="@android:style/Theme.Dialog"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:finishOnTaskLaunch="true"></activity>
     </application>
 
 </manifest>

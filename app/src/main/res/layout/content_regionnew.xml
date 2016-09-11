@@ -6,31 +6,30 @@
     android:paddingBottom="30dp"
     android:paddingTop="30dp"
     android:paddingRight="15dp"
-    android:paddingLeft="15dp"
-    android:weightSum="1">
+    android:paddingLeft="15dp">
 
     <fragment
         android:id="@+id/map"
-        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_weight="0.24"
+        android:layout_marginBottom="20dp"
         class="com.google.android.gms.maps.MapFragment"/>
 
     <ScrollView
-        android:id="@+id/popup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txtView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="#737373"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:typeface="normal" />
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#737373"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:typeface="normal" />
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

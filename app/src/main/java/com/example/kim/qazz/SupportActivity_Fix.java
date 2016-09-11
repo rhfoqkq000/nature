@@ -92,7 +92,7 @@ public class SupportActivity_Fix  extends AppCompatActivity implements Navigatio
 
 
         setSupportActionBar(toolbar);
-        mSectionsPagerAdapter = new SupportActivity_Fix.SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         mViewPager.setAdapter(mSectionsPagerAdapter);
         tabLayout.setupWithViewPager(mViewPager);
@@ -104,21 +104,33 @@ public class SupportActivity_Fix  extends AppCompatActivity implements Navigatio
     }
 
 
+    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         Intent intent;
         if (id == R.id.nav_home) {
+            intent = new Intent(getApplicationContext(),HomeActivity.class);
+            startActivity(intent);
+            finish();
 
         } else if (id == R.id.nav_notice) {
-
+            intent = new Intent(getApplicationContext(),NoticeActivity.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.nav_region) {
-
+            intent = new Intent(getApplicationContext(),RegionActivity.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.nav_support) {
-
+            intent = new Intent(getApplicationContext(),SupportActivity_Fix.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.nav_success) {
+            intent = new Intent(getApplicationContext(),SuccessActivity.class);
+            startActivity(intent);
+            finish();
         }
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

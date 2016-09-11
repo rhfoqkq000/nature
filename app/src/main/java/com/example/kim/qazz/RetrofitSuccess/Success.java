@@ -1,7 +1,5 @@
 package com.example.kim.qazz.RetrofitSuccess;
 
-import com.example.kim.qazz.RetrofitHelpHouse.Repo;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 

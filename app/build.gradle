@@ -60,4 +60,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:8.4.0'
 
     compile 'gun0912.ted:tedpermission:1.0.0'
+
+    compile 'ch.acra:acra:4.9.0'
+
 }

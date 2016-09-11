@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.kim.qazz.RegionActivity"
+    tools:context="com.donga.nature.npe.RegionActivity"
     tools:showIn="@layout/app_bar_region">
 
     <ListView

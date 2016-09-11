@@ -8,5 +8,11 @@
     <string name="develope">개발정보</string>
     <string name="title_activity_support">SupportActivity</string>
 
+    <string name="crash_toast_text">오류 발생</string>
+    <string name="crash_dialog_title">오류 발생</string>
+    <string name="crash_dialog_text">해당 오류를 개발자에게 보고하시겠습니까?</string>
+    <string name="crash_dialog_ok_toast">메일 전송</string>
+
+
     <string name="section_format">Hello World from section: %1$d</string>
 </resources>
