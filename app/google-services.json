@@ -8,7 +8,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:160061975945:android:5a2a646940af0335",
         "android_client_info": {
-          "package_name": "com.example.kim.qazz"
+          "package_name": "com.donga.nature.npe"
         }
       },
       "oauth_client": [
@@ -16,8 +16,47 @@
           "client_id": "160061975945-i9ba9d4ontcuvjln0rq848br7o801ot2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.kim.qazz",
+            "package_name": "com.donga.nature.npe",
             "certificate_hash": "8EFB0E6C1FCF706BB9EB00625009266CA6D16140"
+          }
+        },
+        {
+          "client_id": "160061975945-p1s910m1mt76srgsgk37b3fc7p5fjeg5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAuDOblEEqn2yF-zZiTMoUdM6BmARp26M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160061975945:android:20250c210dc4c885",
+        "android_client_info": {
+          "package_name": "com.donga.nature.npe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160061975945-p91l97a46744vkjeuda8v6728dc245ik.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.donga.nature.npe",
+            "certificate_hash": "26DEE85BCDDEB15E85825B8684CF9C4844291AE1"
           }
         },
         {

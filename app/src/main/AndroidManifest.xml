@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.kim.qazz">
+    package="com.donga.nature.npe">
 
     <permission
-        android:name="com.example.kim.qazz.locationapi.maps.permission.MAPS_RECEIVE"
+        android:name="com.donga.nature.npe.locationapi.maps.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.tistory.webnautes.googlemap.locationapi.maps.permission.MAPS_RECEIVE" />
@@ -21,14 +21,14 @@
         android:required="true" />
 
     <application
-        android:name=".CrashApplication"
+        android:name="com.donga.nature.npe.CrashApplication"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="살어리랏다"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LodingActivity"
+            android:name="com.donga.nature.npe.LodingActivity"
             android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,27 +36,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name="com.donga.nature.npe.HomeActivity"
             android:label="살어리랏다"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".NoticeActivity"
+            android:name="com.donga.nature.npe.NoticeActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RegionActivity"
+            android:name="com.donga.nature.npe.RegionActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RegionNewActivity"
+            android:name="com.donga.nature.npe.RegionNewActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SupportActivity_Fix"
+            android:name="com.donga.nature.npe.SupportActivity_Fix"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SuccessActivity"
+            android:name="com.donga.nature.npe.SuccessActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -69,7 +69,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".ArticleActivity"
+        <activity android:name="com.donga.nature.npe.ArticleActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar"></activity>
 

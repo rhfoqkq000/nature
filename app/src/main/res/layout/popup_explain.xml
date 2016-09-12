@@ -1,0 +1,103 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/popup_element"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background_border"
+    android:orientation="vertical"
+    android:padding="10sp" >
+
+    <ImageButton
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:id="@+id/help_close"
+        android:src="@drawable/help_close"
+        android:background="#000000FF"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
+        android:scaleType="centerInside"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tx"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="사용법"
+        android:textSize="15dp"
+        android:textColor="#000000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/help_image"
+            android:src="@drawable/megaphone"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="5dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/help_text"
+            android:text="공지사항"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/help_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="공지사항을 알려드립니다."
+            android:textSize="20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true">
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:id="@+id/explain_pre_c"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:visibility="invisible"
+            card_view:cardElevation="2dp"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardBackgroundColor="#FCE06D">
+            <Button
+                android:id="@+id/explain_pre"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="#000000FF"
+                android:text="이전" />
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:id="@+id/explain_next_c"
+            android:layout_marginBottom="5dp"
+            android:visibility="visible"
+            card_view:cardElevation="2dp"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardBackgroundColor="#FCE06D">
+            <Button
+                android:id="@+id/explain_next"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="#000000FF"
+                android:text="다음" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</RelativeLayout>
