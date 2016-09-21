@@ -95,5 +95,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/wheat1"
+        android:adjustViewBounds="true"
         android:layout_alignParentBottom="true"/>
 </RelativeLayout>

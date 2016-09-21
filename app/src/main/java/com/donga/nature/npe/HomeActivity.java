@@ -1,5 +1,6 @@
 package com.donga.nature.npe;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -58,6 +61,7 @@ public class HomeActivity extends AppCompatActivity
     ImageView help_image;
     TextView help_text, help_content;
     int i = 0;
+    static Activity activity;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
@@ -74,6 +78,12 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar_home);
         ButterKnife.bind(this);
+
+        activity = this;
+
+        if(isOnline()==false){
+            Toast.makeText(HomeActivity.this, "인터넷을 연결해주세요!", Toast.LENGTH_SHORT).show();
+        }
 
         DBHelper dbHelper = new DBHelper(getApplicationContext(), "CHECK.db", null, 1);
         Log.v("모야모야모야모야",""+dbHelper.rtnCheck());
@@ -272,7 +282,7 @@ public class HomeActivity extends AppCompatActivity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.popup_explain,
                 (ViewGroup) findViewById(R.id.popup_element));
-        helpwindo = new PopupWindow(layout, mWidthPixels-200, mHeightPixels-1000, true);
+        helpwindo = new PopupWindow(layout, mWidthPixels-200, mHeightPixels-500, true);
         helpwindo.showAtLocation(layout, Gravity.CENTER, 0, 0);
         helpwindo.setOutsideTouchable(true);
         helpwindo.setBackgroundDrawable(new BitmapDrawable());
@@ -356,5 +366,22 @@ public class HomeActivity extends AppCompatActivity
                 }
             }
         });
+    }
+
+    private static boolean isOnline() { // network 연결 상태 확인
+        try {
+            ConnectivityManager conMan = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo.State wifi = conMan.getNetworkInfo(1).getState(); // wifi
+            if (wifi == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTING) {
+                return true;
+            }
+            NetworkInfo.State mobile = conMan.getNetworkInfo(0).getState(); // mobile ConnectivityManager.TYPE_MOBILE
+            if (mobile == NetworkInfo.State.CONNECTED || mobile == NetworkInfo.State.CONNECTING) {
+                return true;
+            }
+        } catch (NullPointerException e) {
+            return false;
+        }
+        return false;
     }
 }

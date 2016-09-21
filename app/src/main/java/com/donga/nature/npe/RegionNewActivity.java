@@ -41,7 +41,7 @@ public class RegionNewActivity extends AppCompatActivity implements OnMapReadyCa
                 && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        googleMap.setMyLocationEnabled(true);
+ //       googleMap.setMyLocationEnabled(true);
 
         Marker town = googleMap.addMarker(new MarkerOptions().position(city)
                 .title(townName));
@@ -65,12 +65,6 @@ public class RegionNewActivity extends AppCompatActivity implements OnMapReadyCa
         townFact = myintent.getStringExtra("fact");
         townGood = myintent.getStringExtra("good");
         townBad = myintent.getStringExtra("bad");
-//        if(townGood.equals(null)){
-//            townGood = "정보없음";
-//        }
-//        if(townBad.equals("")){
-//            townBad = "정보없음";
-//        }
         if(townFact.substring(1,townFact.length()-1).equals("null")){
             townFact = "해당 자료 없음";
         }else{
